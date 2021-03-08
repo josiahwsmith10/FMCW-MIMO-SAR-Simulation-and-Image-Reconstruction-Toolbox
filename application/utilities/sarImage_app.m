@@ -1,19 +1,19 @@
+% sarImage_app object holds the properties and methods used for
+% reconstructing the image from the simulated SAR scenario
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef sarImage_app < handle
-    % sarImage_app object holds the properties and methods used for
-    % reconstructing the image from the simulated SAR scenario
-    
     properties
         nFFTx = 512                 % Number of FFT points along the x-dimension, when using FFT-based reconstruction algorithms
         nFFTy = 512                 % Number of FFT points along the y-dimension, when using FFT-based reconstruction algorithms
@@ -45,7 +45,7 @@ classdef sarImage_app < handle
         fontSize = 12               % Font size of displayed image
         vSliceIndex                 % Slices of the 3-D image along the z-dimension to use (default: use all)
         
-        reconstructor               % Reconstructor object: depends on which reconstruction algorithm is being used 
+        reconstructor               % Reconstructor object: depends on which reconstruction algorithm is being used
         isGPU                       % Boolean whether or not to use the GPU for image reconstruction (results vary depending on imaging scenario and parameters)
     end
     methods
@@ -83,8 +83,8 @@ classdef sarImage_app < handle
                 [obj.reconstructor,obj.imXYZ] = obj.reconstructor.computeReconstruction(app,obj);
                 
                 displayImage(obj,app);
-            end            
-                
+            end
+            
             if isempty(obj.reconstructor.isFail) || obj.reconstructor.isFail
                 app.ImageReconstructionCompleteLamp.Color = "red";
             else
@@ -153,6 +153,9 @@ classdef sarImage_app < handle
                     
                 case "1-D CSAR 2-D BPA"
                     obj.reconstructor = nonuniform_theta_CSAR_XZ_BPA_app(app,obj);
+                    
+                case "Custom"
+                    obj.reconstructor = reconstructionAlgorithmTemplate_app(app,obj);
             end
         end
         

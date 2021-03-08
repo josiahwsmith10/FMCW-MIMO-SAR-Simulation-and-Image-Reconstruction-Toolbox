@@ -4,7 +4,7 @@
    <type>toolbox</type>
    <icon>HelpIcon.DEMOS</icon>
    <website/>
-   <description/>
+   <description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</description>
    <demosection>
       <label>utilities</label>
       <demoitem>

@@ -1,16 +1,3 @@
-% Copyright (C) 2021 Josiah W. Smith
-% 
-% This program is free software: you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-
-function plotXYZdB(imgXYZ,X,Y,Z,zSliceIndex,dBMin,titlestr,fontSize)
 % PLOTXYZDB     Plots a 3-D point cloud image in dB
 %   PLOTXYZDB(imgXYZ,X,Y,Z,zSliceIndex,dBMin,titlestr,fontSize) plots the
 %   image in the 3-D array imgXYZ along the dimensions specified in X,Y,Z,
@@ -18,7 +5,20 @@ function plotXYZdB(imgXYZ,X,Y,Z,zSliceIndex,dBMin,titlestr,fontSize)
 %   specified by the user, dBMin is the minimum threshold in terms of dB,
 %   titlestr is the title of the figure, and fontSize is the font size used
 %   for the axes and various labels
+%
+% Copyright (C) 2021 Josiah W. Smith
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
 
+function plotXYZdB(imgXYZ,X,Y,Z,zSliceIndex,dBMin,titlestr,fontSize)
 if isempty(zSliceIndex)
     zSliceIndex = 1:length(Z);
 end

@@ -1,18 +1,19 @@
+% uniform_thetaY_CSAR_XYZ_PFA_app see uniform_thetaY_CSAR_XYZ_PFA
+% documentation
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
-    % uniform_thetaY_CSAR_XYZ_PFA_app see uniform_thetaY_CSAR_XYZ_PFA
-    % documentation
     properties
         sarData
         
@@ -171,6 +172,9 @@ classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
             dkY = 2*pi/L_y;
             kY = make_kX(obj,dkY,obj.nFFTy)';
             
+            kSy = 2*pi/obj.yStep_m;
+            kY = linspace(-kSy/2,kSy/2,obj.nFFTy)';
+            
             kR = single(sqrt(4 * k.^2 - kY.^2) .* (4 * k.^2 > kY.^2));
             kX = kR.*cos(theta_rad);
             kZ = kR.*sin(theta_rad);
@@ -199,42 +203,42 @@ classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
                     obj = mult2mono_app(obj,app);
                 end
                 
-%                 obj = reconstruct4segs(obj,app);
+                %                 obj = reconstruct4segs(obj,app);
                 obj = reconstruct(obj,app);
             end
             imXYZ_out = abs(obj.imXYZ);
         end
         
-%         function obj = reconstruct4segs(obj,app)
-%             theta_rad_orig = obj.theta_rad_vec;
-%             sarData_orig = obj.sarData;
-%             
-%             % 1st segment
-%             obj.theta_rad_vec = theta_rad_orig(1:end/4);
-%             obj.sarData = sarData_orig(:,1:end/4,:);
-%             obj = reconstruct(obj,app);
-%             im1 = obj.imXYZ;
-%             
-%             % 2nd segment
-%             obj.theta_rad_vec = theta_rad_orig(end/4+1:end/2);
-%             obj.sarData = sarData_orig(:,end/4+1:end/2,:);
-%             obj = reconstruct(obj,app);
-%             im2 = obj.imXYZ;
-%             
-%             % 3rd segment
-%             obj.theta_rad_vec = theta_rad_orig(end/2+1:end*3/4);
-%             obj.sarData = sarData_orig(:,end/2+1:end*3/4,:);
-%             obj = reconstruct(obj,app);
-%             im3 = obj.imXYZ;
-%             
-%             % 4th segment
-%             obj.theta_rad_vec = theta_rad_orig(end*3/4+1:end);
-%             obj.sarData = sarData_orig(:,end*3/4+1:end,:);
-%             obj = reconstruct(obj,app);
-%             im4 = obj.imXYZ;
-%             
-%             obj.imXYZ = im1 + im2 + im3 + im4;
-%         end
+        %         function obj = reconstruct4segs(obj,app)
+        %             theta_rad_orig = obj.theta_rad_vec;
+        %             sarData_orig = obj.sarData;
+        %
+        %             % 1st segment
+        %             obj.theta_rad_vec = theta_rad_orig(1:end/4);
+        %             obj.sarData = sarData_orig(:,1:end/4,:);
+        %             obj = reconstruct(obj,app);
+        %             im1 = obj.imXYZ;
+        %
+        %             % 2nd segment
+        %             obj.theta_rad_vec = theta_rad_orig(end/4+1:end/2);
+        %             obj.sarData = sarData_orig(:,end/4+1:end/2,:);
+        %             obj = reconstruct(obj,app);
+        %             im2 = obj.imXYZ;
+        %
+        %             % 3rd segment
+        %             obj.theta_rad_vec = theta_rad_orig(end/2+1:end*3/4);
+        %             obj.sarData = sarData_orig(:,end/2+1:end*3/4,:);
+        %             obj = reconstruct(obj,app);
+        %             im3 = obj.imXYZ;
+        %
+        %             % 4th segment
+        %             obj.theta_rad_vec = theta_rad_orig(end*3/4+1:end);
+        %             obj.sarData = sarData_orig(:,end*3/4+1:end,:);
+        %             obj = reconstruct(obj,app);
+        %             im4 = obj.imXYZ;
+        %
+        %             obj.imXYZ = im1 + im2 + im3 + im4;
+        %         end
         
         function obj = reconstruct(obj,app)
             % Start the Progress Bar
@@ -281,12 +285,18 @@ classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
             d.Value = 3/10;
             
             % Upsample data
-            if obj.thetaUpsampleFactor > 1
+            if obj.thetaUpsampleFactor > 1 || obj.nFFTz > length(k)
                 theta_radUp = single(reshape(linspace(theta_rad(1),theta_rad(end),length(theta_rad)*obj.thetaUpsampleFactor),1,[]));
-                [Y,T,K] = ndgrid(single(1:size(sarDataPadded,1))',theta_radUp,reshape(single(1:size(sarDataPadded,3)),1,1,[]));
-                sarDataPadded = interpn(single(1:size(sarDataPadded,1))',theta_rad(:),single(1:size(sarDataPadded,3))',sarDataPadded,Y,T,K);
+                kUp = single(reshape(linspace(min(k),max(k),obj.nFFTz),1,1,[]));
+                kR = single(sqrt(4 * kUp.^2 - kY.^2) .* (4 * kUp.^2 > kY.^2));
+                y = single(reshape(-(size(sarDataPadded,1)-1)/2:(size(sarDataPadded,1)-1)/2,[],1));
+                [Yold,Told,Kold] = ndgrid(y,theta_rad,k);
+                [Y,T,K] = ndgrid(y,theta_radUp,kUp);
+                sarDataPadded = interpn(Yold,Told,Kold,sarDataPadded,Y,T,K);
                 clear Y T K
                 theta_rad = theta_radUp;
+                k = kUp;
+                clear theta_radUp kUp y Yold Told Kold
             end
             d.Value = 3.5/10;
             
@@ -338,7 +348,7 @@ classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
             d.Value = 9/10;
             
             [X,Y,Z] = ndgrid(obj.x_m(:),obj.y_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),z_m_temp(:),sarImage,X,Y,Z,'linear',0)));
+            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),z_m_temp(:),sarImage,X,Y,Z,'nearest',0)));
             d.Value = 10/10;
         end
         

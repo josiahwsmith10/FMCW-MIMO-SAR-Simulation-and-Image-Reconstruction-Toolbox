@@ -1,19 +1,19 @@
+% sarTarget_app object holds the properties and methods
+% used in the FMCW MIMO-SAR scenario as specified by the user
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef sarTarget_app < handle
-    % sarTarget_app object holds the properties and methods 
-    % used in the FMCW MIMO-SAR scenario as specified by the user
-    
     properties
         isGPU = true                % Boolean whether or not to use the GPU for beat signal computation
         isMIMO                      % Boolean whether or not to use the MIMO physical element locations instead of the equivalent phase center virtual element locations
@@ -22,7 +22,7 @@ classdef sarTarget_app < handle
         
         isLong = false              % Boolean whether or not to use the long beat signal computation method
         numTargets = 0              % Number of target voxels
-        xyz_m                       % Target x-y-z locations as a (numTargets)x3 array 
+        xyz_m                       % Target x-y-z locations as a (numTargets)x3 array
         amp                         % Column vector of target reflectivities
         R                           % Radial distances from antennas to target (MIMO or EPC)
         
@@ -562,7 +562,7 @@ classdef sarTarget_app < handle
         end
         
         function obj = verifyGPU(obj,app)
-            % Verifies if the GPU can be used 
+            % Verifies if the GPU can be used
             
             if app.UseGPUCheckBox.Value
                 try

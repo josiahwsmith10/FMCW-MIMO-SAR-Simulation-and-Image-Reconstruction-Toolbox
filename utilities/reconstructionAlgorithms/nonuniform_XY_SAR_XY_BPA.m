@@ -1,22 +1,22 @@
+% nonuniform_XY_SAR_XY_BPA is a reconstructor class that performs a
+% 2-D Backprojection Algorithm image reconstruction. The synthetic
+% aperture must span an x-y plane and can be nonuniformly spaced or use
+% a MIMO array, even overlapping. The target can be a 1-D or 2-D target
+% in the x-y place at the z-coordinate zSlice_m
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef nonuniform_XY_SAR_XY_BPA < handle
-    % nonuniform_XY_SAR_XY_BPA is a reconstructor class that performs a
-    % 2-D Backprojection Algorithm image reconstruction. The synthetic
-    % aperture must span an x-y plane and can be nonuniformly spaced or use
-    % a MIMO array, even overlapping. The target can be a 1-D or 2-D target
-    % in the x-y place at the z-coordinate zSlice_m
-    
     properties
         sarData             % Computed beat signal
         

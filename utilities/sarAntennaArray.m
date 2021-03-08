@@ -1,19 +1,19 @@
+% sarAntennaArray object holds the properties and methods
+% of the MIMO antenna array as specified by the user
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef sarAntennaArray < handle
-    % sarAntennaArray object holds the properties and methods
-    % of the MIMO antenna array as specified by the user
-    
     properties
         
         tx = struct('xy_m',[],'xyz_m',[])   % Structure containing the parameters (location, etc.) of the transmitter antennas

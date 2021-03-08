@@ -1,20 +1,20 @@
+% Attempts to compute the Backprojection Algorithm in a parallelized
+% manner. May fail due to excessive size of the desired image or number of
+% synthetic elements compared with the available memory.
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 function fastBPA(obj,k)
-% Attempts to compute the Backprojection Algorithm in a parallelized
-% manner. May fail due to excessive size of the desired image or number of
-% synthetic elements compared with the available memory.
-
 obj.imXYZ = single(zeros(1,size(obj.target_xyz_m,1)));
 tocs = single(zeros(1,length(k)));
 for indK = 1:length(k)

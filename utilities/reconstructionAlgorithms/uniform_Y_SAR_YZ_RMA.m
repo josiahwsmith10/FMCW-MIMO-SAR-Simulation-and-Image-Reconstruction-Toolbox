@@ -1,21 +1,21 @@
+% uniform_Y_SAR_YZ_RMA is a reconstructor class that performs a 2-D
+% Range Migration Algorithm image reconstruction. The synthetic
+% aperture must span the y-dimension and the target must be a 2-D
+% target in the y-z plane
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_Y_SAR_YZ_RMA < handle
-    % uniform_Y_SAR_YZ_RMA is a reconstructor class that performs a 2-D
-    % Range Migration Algorithm image reconstruction. The synthetic
-    % aperture must span the y-dimension and the target must be a 2-D
-    % target in the y-z plane
-    
     properties
         sarData             % Computed beat signal
         
@@ -240,7 +240,7 @@ classdef uniform_Y_SAR_YZ_RMA < handle
             z_m_temp = single(2*pi / (dkZU * obj.nFFTz) * (1:obj.nFFTz));
             
             [Y,Z] = ndgrid(obj.y_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(y_m_temp(:),z_m_temp(:),sarImage,Y,Z,'linear',0)));
+            obj.imXYZ = single(gather(interpn(y_m_temp(:),z_m_temp(:),sarImage,Y,Z,"nearest",0)));
         end
         
         function displayImage(obj)

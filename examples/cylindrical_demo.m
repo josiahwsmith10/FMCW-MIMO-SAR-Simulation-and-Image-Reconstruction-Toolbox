@@ -10,6 +10,9 @@
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
+%% Include Necessary Directories
+addpath(genpath("../"))
+
 %% Create the Objects
 fmcw = fmcwChirpParameters();
 ant = sarAntennaArray(fmcw);
@@ -56,7 +59,7 @@ ant.displayAntennaArray();
 sar.scanMethod = 'Cylindrical';
 sar.numY = 25;
 sar.yStep_m = fmcw.lambda_m*2;
-sar.numTheta = 256;
+sar.numTheta = 1024;
 sar.thetaMax_deg = 360;
 
 % Display the SAR Scenario
@@ -68,8 +71,8 @@ sar.displaySarScenario();
 target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0.25    1
-    0   0.1 0.25    1];
+    0   0   0    1
+    0   0.1 0    1];
 
 target.png.fileName = 'circle.png';
 target.png.xStep_m = 1e-3;
@@ -129,7 +132,7 @@ im.numY = 128;
 im.numZ = 128;
 
 im.isGPU = false;
-im.thetaUpsampleFactor = 4;
+im.thetaUpsampleFactor = 1;
 im.method = "Uniform 2-D CSAR 3-D PFA";
 
 im.isMult2Mono = true;

@@ -1,21 +1,21 @@
+% nonuniform_theta_CSAR_XZ_BPA is a reconstructor class that performs
+% a 2-D Backprojection Algorithm image reconstruction. The synthetic
+% aperture must span a circular aperture and the target can be a
+% 1-D or 2-D target in the x-z place at the y-coordinate y = 0
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef nonuniform_theta_CSAR_XZ_BPA < handle
-    % nonuniform_theta_CSAR_XZ_BPA is a reconstructor class that performs
-    % a 2-D Backprojection Algorithm image reconstruction. The synthetic
-    % aperture must span a circular aperture and the target can be a
-    % 1-D or 2-D target in the x-z place at the y-coordinate y = 0
-    
     properties
         sarData             % Computed beat signal
         

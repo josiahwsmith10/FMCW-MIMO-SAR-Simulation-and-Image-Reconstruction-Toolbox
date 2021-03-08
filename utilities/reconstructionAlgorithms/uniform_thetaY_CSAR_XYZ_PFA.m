@@ -1,22 +1,22 @@
+% uniform thetaY_CSAR_XYZ_PFA is a reconstructor class that performs
+% 3-D Polar Formatting Algorithm image reconstruction. The synthetic
+% aperture must span across the y and theta dimensions, forming a
+% cylindrical aperture, and the target can be a 1-D, 2-D, or 3-D target
+% in x-y-z space
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_thetaY_CSAR_XYZ_PFA < handle
-    % uniform thetaY_CSAR_XYZ_PFA is a reconstructor class that performs
-    % 3-D Polar Formatting Algorithm image reconstruction. The synthetic
-    % aperture must span across the y and theta dimensions, forming a
-    % cylindrical aperture, and the target can be a 1-D, 2-D, or 3-D target
-    % in x-y-z space
-    
     properties
         sarData             % Computed beat signal
         
@@ -344,7 +344,7 @@ classdef uniform_thetaY_CSAR_XYZ_PFA < handle
             z_m_temp = make_x(obj,2*pi/(dkZU*obj.nFFTz),obj.nFFTz);
             
             [X,Y,Z] = ndgrid(obj.x_m(:),obj.y_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),z_m_temp(:),sarImage,X,Y,Z,'linear',0)));
+            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),z_m_temp(:),sarImage,X,Y,Z,"nearest",0)));
         end
         
         function displayImage(obj)

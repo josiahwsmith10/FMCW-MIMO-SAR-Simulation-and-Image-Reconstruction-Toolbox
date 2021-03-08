@@ -1,17 +1,18 @@
+% uniform_Y_SAR_Y_FFT_app see uniform_Y_SAR_Y_FFT documentation
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_Y_SAR_Y_FFT_app < handle
-    % uniform_Y_SAR_Y_FFT_app see uniform_Y_SAR_Y_FFT documentation
     properties
         sarData
         
@@ -151,7 +152,7 @@ classdef uniform_Y_SAR_Y_FFT_app < handle
             d.Value = 2/10;
             
             % Compute Wavenumbers
-            k = single(reshape(obj.k_vec,1,[]));            
+            k = single(reshape(obj.k_vec,1,[]));
             L_y = obj.nFFTy * obj.yStep_m;
             dkY = 2*pi/L_y;
             kY = make_kX(obj,dkY,obj.nFFTy)';
@@ -181,7 +182,7 @@ classdef uniform_Y_SAR_Y_FFT_app < handle
             d.Value = 5/10;
             
             sarImageFFT = sum(sarDataFFT .* focusingFilter,2);
-            clear sarDataFFT focusingFilter kY k kZ 
+            clear sarDataFFT focusingFilter kY k kZ
             
             d.Value = 6/10;
             
@@ -194,7 +195,7 @@ classdef uniform_Y_SAR_Y_FFT_app < handle
             y_m_temp = make_x(obj,obj.yStep_m,obj.nFFTy);
             d.Value = 9/10;
             
-            obj.imXYZ = single(gather(interpn(y_m_temp(:),sarImage,obj.y_m(:),'linear',0)));
+            obj.imXYZ = single(gather(interpn(y_m_temp(:),sarImage,obj.y_m(:),'nearest',0)));
             if obj.isGPU
                 reset(gpuDevice);
             end

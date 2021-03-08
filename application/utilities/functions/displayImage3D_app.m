@@ -1,3 +1,7 @@
+% Displays the 3-D reconstructed image
+%
+% See also PLOTXYZDB, displayImage3D.
+%
 % Copyright (C) 2021 Josiah W. Smith
 % 
 % This program is free software: you can redistribute it and/or modify

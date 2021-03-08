@@ -1,3 +1,7 @@
+% Displays the reconstructed 2-D image
+%
+% See also PLOTXYDB, displayImage2D.
+%
 % Copyright (C) 2021 Josiah W. Smith
 % 
 % This program is free software: you can redistribute it and/or modify

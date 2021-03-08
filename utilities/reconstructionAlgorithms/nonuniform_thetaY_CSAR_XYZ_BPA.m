@@ -1,22 +1,22 @@
+% nonuniform_thetaY_CSAR_XYZ_BPA is a reconstructor class that performs
+% a 3-D Backprojection Algorithm image reconstruction. The synthetic
+% aperture must span a cylindrical aperture and the target can be a
+% 1-D, 2-D, or 3-D target in x-y-z space, typically centered at the
+% origin, which is the center of the cylindrical synthetic aperture
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef nonuniform_thetaY_CSAR_XYZ_BPA < handle
-    % nonuniform_thetaY_CSAR_XYZ_BPA is a reconstructor class that performs
-    % a 3-D Backprojection Algorithm image reconstruction. The synthetic
-    % aperture must span a cylindrical aperture and the target can be a
-    % 1-D, 2-D, or 3-D target in x-y-z space, typically centered at the
-    % origin, which is the center of the cylindrical synthetic aperture
-    
     properties
         sarData             % Computed beat signal
         

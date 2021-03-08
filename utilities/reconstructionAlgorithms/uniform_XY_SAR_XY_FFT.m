@@ -1,21 +1,21 @@
+% uniform_XY_SAR_XY_FFT is a reconstructor class that performs 2-D FFT
+% image reconstruction. The synthetic aperture must span an x-y plane
+% at the z-coordinate z0_m and the target must be a 2-D target at in
+% x-y plane at the z-coordinate zSlice_m
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_XY_SAR_XY_FFT < handle
-    % uniform_XY_SAR_XY_FFT is a reconstructor class that performs 2-D FFT
-    % image reconstruction. The synthetic aperture must span an x-y plane
-    % at the z-coordinate z0_m and the target must be a 2-D target at in
-    % x-y plane at the z-coordinate zSlice_m
-    
     properties
         sarData             % Computed beat signal
         
@@ -235,7 +235,7 @@ classdef uniform_XY_SAR_XY_FFT < handle
             y_m_temp = make_x(obj,obj.yStep_m,obj.nFFTy);
             
             [X,Y] = ndgrid(obj.x_m(:),obj.y_m(:));
-            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),sarImage,X,Y,'linear',0)));
+            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),sarImage,X,Y,"nearest",0)));
         end
         
         function displayImage(obj)

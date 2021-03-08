@@ -1,18 +1,18 @@
+% sarTarget object holds the properties and methods used in the FMCW MIMO-SAR scenario as specified by the user
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef sarTarget < handle
-    % sarTarget object holds the properties and methods used in the FMCW MIMO-SAR scenario as specified by the user
-    
     properties
         isGPU = true                % Boolean whether or not to use the GPU for beat signal computation
         isLong = false              % Boolean whether or not to use the long beat signal computation method

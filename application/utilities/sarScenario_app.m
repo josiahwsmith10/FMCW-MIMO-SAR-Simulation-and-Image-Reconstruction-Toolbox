@@ -1,20 +1,20 @@
+% sarScenario_app object holds the properties and methods
+% used for simulating a MIMO-SAR scanning scenario in four modes:
+% linear, rectilinear (planar), circular, or cylindrical
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef sarScenario_app < handle
-    % sarScenario_app object holds the properties and methods 
-    % used for simulating a MIMO-SAR scanning scenario in four modes:
-    % linear, rectilinear (planar), circular, or cylindrical
-    
     properties
         method                      % Scanning mode: "Linear", "Rectilinear", "Circular", or "Cylindrical"
         xStep_m                     % Step size along the x-dimension to move the antenna array in meters

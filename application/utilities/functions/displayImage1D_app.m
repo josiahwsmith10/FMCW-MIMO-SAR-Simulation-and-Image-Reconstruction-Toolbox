@@ -1,3 +1,7 @@
+% Displays the reconstructed 1-D image
+%
+% Also see displayImage1D.
+%
 % Copyright (C) 2021 Josiah W. Smith
 % 
 % This program is free software: you can redistribute it and/or modify

@@ -1,16 +1,3 @@
-% Copyright (C) 2021 Josiah W. Smith
-% 
-% This program is free software: you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-
-function plotXYdB(imgXY,X,Y,dBMin,xlab,ylab,titlestr,fontSize)
 % PLOTXYDB     Plots a 3-D point cloud image in dB
 %   PLOTXYDB(imgXY,X,Y,dBMin,xlab,ylab,titlestr,fontSize) plots the
 %   image in the 2-D array imgXY along the dimensions specified in X and Y
@@ -18,7 +5,20 @@ function plotXYdB(imgXY,X,Y,dBMin,xlab,ylab,titlestr,fontSize)
 %   for the x-axis, ylab is the label for the y-axis, titlestr is the title
 %   of the figure, and fontSize is the font size used for the axes and
 %   various labels
+%
+% Copyright (C) 2021 Josiah W. Smith
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
 
+function plotXYdB(imgXY,X,Y,dBMin,xlab,ylab,titlestr,fontSize)
 % Organize in meshgrid format
 imgYX = imgXY.';
 

@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>circular_demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-03"><meta name="DC.source" content="circular_demo.m"><style type="text/css">
+      --><title>circular_demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-08"><meta name="DC.source" content="circular_demo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,7 +67,17 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Include Necessary Directories</a></li><li><a href="#2">Create the Objects</a></li><li><a href="#3">Set FMCW Parameters</a></li><li><a href="#4">Set Antenna Array Properties</a></li><li><a href="#5">Set SAR Scenario Parameters</a></li><li><a href="#6">Set Target Parameters</a></li><li><a href="#7">Compute Beat Signal</a></li><li><a href="#8">Set Image Reconstruction Parameters and Create sarImage Object</a></li><li><a href="#9">Reconstruct the Image</a></li><li><a href="#10">Display the Image with Different Parameters</a></li></ul></div><h2 id="1">Include Necessary Directories</h2><pre class="codeinput">addpath(genpath(<span class="string">"../"</span>));
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Create the Objects</a></li><li><a href="#3">Set FMCW Parameters</a></li><li><a href="#4">Set Antenna Array Properties</a></li><li><a href="#5">Set SAR Scenario Parameters</a></li><li><a href="#6">Set Target Parameters</a></li><li><a href="#7">Compute Beat Signal</a></li><li><a href="#8">Set Image Reconstruction Parameters and Create sarImage Object</a></li><li><a href="#9">Reconstruct the Image</a></li><li><a href="#10">Display the Image with Different Parameters</a></li></ul></div><pre class="codeinput"><span class="comment">% Copyright (C) 2021 Josiah W. Smith</span>
+<span class="comment">%</span>
+<span class="comment">% This program is free software: you can redistribute it and/or modify</span>
+<span class="comment">% it under the terms of the GNU General Public License as published by</span>
+<span class="comment">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">% (at your option) any later version.</span>
+<span class="comment">%</span>
+<span class="comment">% This program is distributed in the hope that it will be useful,</span>
+<span class="comment">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="comment">% GNU General Public License for more details.</span>
 </pre><h2 id="2">Create the Objects</h2><pre class="codeinput">fmcw = fmcwChirpParameters();
 ant = sarAntennaArray(fmcw);
 sar = sarScenario(ant);
@@ -149,8 +159,17 @@ im.fontSize = 12;
 im.displayImage();
 </pre><img vspace="5" hspace="5" src="circular_demo_05.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% Include Necessary Directories
-addpath(genpath("../"));
+% Copyright (C) 2021 Josiah W. Smith
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
 
 %% Create the Objects
 fmcw = fmcwChirpParameters();

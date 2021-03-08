@@ -1,20 +1,20 @@
+% Attempts to compute the Backprojection Algorithm by iterating over the
+% wavenumber and target voxel domains. Usually takes an excessive amount of
+% time to compute
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 function mediumBPA(obj,k)
-% Attempts to compute the Backprojection Algorithm by iterating over the
-% wavenumber and target voxel domains. Usually takes an excessive amount of
-% time to compute
-
 obj.imXYZ = single(zeros(1,size(obj.target_xyz_m,1)));
 tocs = single(zeros(1,2^14));
 count = 0;

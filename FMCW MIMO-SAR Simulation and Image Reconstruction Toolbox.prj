@@ -4,8 +4,8 @@
     <param.authnamewatermark>Josiah W. Smith</param.authnamewatermark>
     <param.email>jws160130@utdallas.edu</param.email>
     <param.company>The University of Texas at Dallas</param.company>
-    <param.summary />
-    <param.description />
+    <param.summary>A toolbox for near-field FMCW MIMO-SAR simulation and image reconstruction.</param.summary>
+    <param.description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</param.description>
     <param.screenshot />
     <param.version>0.1</param.version>
     <param.output>${PROJECT_ROOT}\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx</param.output>
@@ -126,8 +126,6 @@ demos.xml</param.exclude.filters>
     <unset>
       <param.authnamewatermark />
       <param.email />
-      <param.summary />
-      <param.description />
       <param.screenshot />
       <param.output />
       <param.platforms />
@@ -154,10 +152,13 @@ demos.xml</param.exclude.filters>
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\.git</file>
+      <file>${PROJECT_ROOT}\.gitattributes</file>
       <file>${PROJECT_ROOT}\application</file>
       <file>${PROJECT_ROOT}\DesktopToolset.xml</file>
       <file>${PROJECT_ROOT}\docs</file>
       <file>${PROJECT_ROOT}\examples</file>
+      <file>${PROJECT_ROOT}\LICENSE</file>
       <file>${PROJECT_ROOT}\utilities</file>
     </fileset.rootfiles>
     <fileset.depfun.included />

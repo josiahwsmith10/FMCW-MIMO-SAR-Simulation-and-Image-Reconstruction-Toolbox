@@ -1,22 +1,22 @@
+% uniform_Y_SAR_Y_FFT is a reconstructor class that performs a 1-D FFT
+% method image reconstruction. The synthetic aperture must span the
+% y-dimension and the target can be a 1-D or 2-D target in the y-z
+% plane. The reconstructed image is a slice along the y-dimension at
+% the z-coordinate zSlice_m
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_Y_SAR_Y_FFT < handle
-    % uniform_Y_SAR_Y_FFT is a reconstructor class that performs a 1-D FFT
-    % method image reconstruction. The synthetic aperture must span the
-    % y-dimension and the target can be a 1-D or 2-D target in the y-z
-    % plane. The reconstructed image is a slice along the y-dimension at
-    % the z-coordinate zSlice_m
-    
     properties
         sarData             % Computed beat signal
         
@@ -209,7 +209,7 @@ classdef uniform_Y_SAR_Y_FFT < handle
             % Declare Spatial Vectors
             y_m_temp = make_x(obj,obj.yStep_m,obj.nFFTy);
             
-            obj.imXYZ = single(gather(interpn(y_m_temp(:),sarImage,obj.y_m(:),'linear',0)));
+            obj.imXYZ = single(gather(interpn(y_m_temp(:),sarImage,obj.y_m(:),"nearest",0)));
             if obj.isGPU
                 reset(gpuDevice);
             end

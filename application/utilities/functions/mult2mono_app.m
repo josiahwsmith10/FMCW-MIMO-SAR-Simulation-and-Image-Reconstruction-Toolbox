@@ -1,3 +1,8 @@
+% Computes the Y-dimension multistatic-to-monostatic approxmiation. Only
+% works for MIMO arrays whose elements are colinear
+%
+% Also see mult2mono
+%
 % Copyright (C) 2021 Josiah W. Smith
 % 
 % This program is free software: you can redistribute it and/or modify

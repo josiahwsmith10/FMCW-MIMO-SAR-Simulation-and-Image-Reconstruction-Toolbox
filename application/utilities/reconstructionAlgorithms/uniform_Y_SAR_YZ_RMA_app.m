@@ -1,17 +1,18 @@
+% uniform_Y_SAR_YZ_RMA_app see uniform_Y_SAR_YZ_RMA documentation
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_Y_SAR_YZ_RMA_app < handle
-    % uniform_Y_SAR_YZ_RMA_app see uniform_Y_SAR_YZ_RMA documentation
     properties
         sarData
         
@@ -89,7 +90,7 @@ classdef uniform_Y_SAR_YZ_RMA_app < handle
                     "Options",{'OK'},'Icon','warning');
                 obj.isFail = true;
                 return
-            end            
+            end
             
             % Ensure array is colinear
             if max(diff([app.ant.tx.xy_m(:,1);app.ant.rx.xy_m(:,1)])) > 8*eps
@@ -220,7 +221,7 @@ classdef uniform_Y_SAR_YZ_RMA_app < handle
                     end
                 end
             end
-            clear sarDataFFT focusingFilter kY k kYU kU kZ kZU            
+            clear sarDataFFT focusingFilter kY k kYU kU kZ kZU
             d.Value = 6/10;
             
             % Recover Image by IFT: p(y,z)
@@ -234,7 +235,7 @@ classdef uniform_Y_SAR_YZ_RMA_app < handle
             d.Value = 9/10;
             
             [Y,Z] = ndgrid(obj.y_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(y_m_temp(:),z_m_temp(:),sarImage,Y,Z,'linear',0)));
+            obj.imXYZ = single(gather(interpn(y_m_temp(:),z_m_temp(:),sarImage,Y,Z,'nearest',0)));
             d.Value = 10/10;
         end
         

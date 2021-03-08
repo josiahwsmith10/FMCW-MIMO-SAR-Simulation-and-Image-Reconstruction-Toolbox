@@ -1,18 +1,19 @@
+% nonuniform_XY_SAR_XYZ_BPA_app see nonuniform_XY_SAR_XYZ_BPA
+% documentation
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef nonuniform_XY_SAR_XYZ_BPA_app < handle
-    % nonuniform_XY_SAR_XYZ_BPA_app see nonuniform_XY_SAR_XYZ_BPA
-    % documentation
     properties
         sarData             % Computed beat signal
         
@@ -103,7 +104,7 @@ classdef nonuniform_XY_SAR_XYZ_BPA_app < handle
             catch
                 d.Title = "Performing XYZ BPA";
                 obj = mediumBPA(obj,k,d);
-            end            
+            end
             
             delete(d)
             try
@@ -122,7 +123,7 @@ classdef nonuniform_XY_SAR_XYZ_BPA_app < handle
                 if d.CancelRequested
                     warning("Image not computed!")
                     return;
-                end                
+                end
                 
                 if obj.isMIMO
                     Rt = pdist2(obj.tx_xyz_m,obj.target_xyz_m);

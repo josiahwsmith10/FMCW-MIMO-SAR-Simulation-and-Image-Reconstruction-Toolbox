@@ -1,18 +1,19 @@
+% uniform_theta_CSAR_XZ_PFA_app see uniform_theta_CSAR_XZ_PFA
+% documentation
+%
 % Copyright (C) 2021 Josiah W. Smith
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
 classdef uniform_theta_CSAR_XZ_PFA_app < handle
-    % uniform_theta_CSAR_XZ_PFA_app see uniform_theta_CSAR_XZ_PFA
-    % documentation
     properties
         sarData
         
@@ -245,7 +246,7 @@ classdef uniform_theta_CSAR_XZ_PFA_app < handle
             d.Value = 9/10;
             
             [X,Z] = ndgrid(obj.x_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(x_m_temp(:),z_m_temp(:),sarImage,X,Z,'linear',0)));
+            obj.imXYZ = single(gather(interpn(x_m_temp(:),z_m_temp(:),sarImage,X,Z,"nearest",0)));
             d.Value = 10/10;
         end
         
@@ -256,6 +257,6 @@ classdef uniform_theta_CSAR_XZ_PFA_app < handle
         function x = make_x(obj,xStep_m,nFFTx)
             x = xStep_m * (-(nFFTx-1)/2 : (nFFTx-1)/2);
             x = single(x);
-        end        
+        end
     end
 end

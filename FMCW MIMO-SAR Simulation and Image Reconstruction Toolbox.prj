@@ -1,8 +1,8 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="C:\Users\josia\Box\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josia\Box\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
+  <configuration file="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox</param.appname>
-    <param.authnamewatermark>Josiah W. Smith</param.authnamewatermark>
-    <param.email>jws160130@utdallas.edu</param.email>
+    <param.authnamewatermark />
+    <param.email />
     <param.company>The University of Texas at Dallas</param.company>
     <param.summary>A toolbox for near-field FMCW MIMO-SAR simulation and image reconstruction.</param.summary>
     <param.description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</param.description>
@@ -26,12 +26,12 @@
       <item>19</item>
     </param.products.id>
     <param.products.version>
-      <item>9.8</item>
-      <item>9.2</item>
-      <item>11.1</item>
-      <item>7.2</item>
-      <item>8.4</item>
-      <item>11.7</item>
+      <item>9.10</item>
+      <item>10.0</item>
+      <item>11.3</item>
+      <item>7.4</item>
+      <item>8.6</item>
+      <item>12.1</item>
     </param.products.version>
     <param.platforms />
     <param.guid>634418e8-4164-4479-955a-33e81bba44b3</param.guid>
@@ -110,8 +110,8 @@ demos.xml</param.exclude.filters>
     <param.required.addons />
     <param.matlab.project.id />
     <param.matlab.project.name />
-    <param.release.start />
-    <param.release.end />
+    <param.release.start>R2018a</param.release.start>
+    <param.release.end>latest</param.release.end>
     <param.release.current.only>false</param.release.current.only>
     <param.compatiblity.windows>true</param.compatiblity.windows>
     <param.compatiblity.macos>false</param.compatiblity.macos>
@@ -138,8 +138,6 @@ demos.xml</param.exclude.filters>
       <param.required.addons />
       <param.matlab.project.id />
       <param.matlab.project.name />
-      <param.release.start />
-      <param.release.end />
       <param.release.current.only />
       <param.compatiblity.windows />
       <param.additional.sw.names />
@@ -153,7 +151,7 @@ demos.xml</param.exclude.filters>
     </fileset.rootdir>
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}\.git</file>
-      <file>${PROJECT_ROOT}\.gitattributes</file>
+      <file>${PROJECT_ROOT}\.gitignore</file>
       <file>${PROJECT_ROOT}\application</file>
       <file>${PROJECT_ROOT}\DesktopToolset.xml</file>
       <file>${PROJECT_ROOT}\docs</file>
@@ -165,14 +163,13 @@ demos.xml</param.exclude.filters>
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx" optional="false">C:\Users\josia\Box\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx" optional="false">C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2020a</root>
+      <root>C:\Program Files\MATLAB\R2021a</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
-        <toolbox name="gpucoder" />
         <toolbox name="fixedpoint" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
@@ -180,11 +177,6 @@ demos.xml</param.exclude.filters>
         <matlabcoder>
           <enabled>true</enabled>
         </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <gpucoder>
-          <enabled>true</enabled>
-        </gpucoder>
       </toolbox>
       <toolbox>
         <fixedpoint>

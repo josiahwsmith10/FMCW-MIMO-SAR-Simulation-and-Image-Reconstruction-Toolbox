@@ -30,6 +30,7 @@
             <tocitem target="creatingTarget.html">Creating a Target Scene and Simulating the Beat Signal</tocitem>
             <tocitem target="reconstructingAnImage.html">Reconstructing an Image</tocitem>
             <tocitem target="developingCustomReconstructionAlgorithm.html">Developing a Custom Image Reconstruction Algorithm</tocitem>
+            <tocitem target="demos/dataset_demo.html">Dataset Generation</tocitem>
         </tocitem>
         
         <!-- Function reference next -->

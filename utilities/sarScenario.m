@@ -239,7 +239,7 @@ classdef sarScenario < handle
         function displaySarScenario(obj)
             % Display the synthetic aperture
             
-            if isempty(obj.fig.f)
+            if isempty(obj.fig.f) || ~isvalid(obj.fig.h)
                 initializeFigures(obj);
             end
             

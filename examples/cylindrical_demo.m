@@ -59,7 +59,7 @@ ant.displayAntennaArray();
 sar.scanMethod = 'Cylindrical';
 sar.numY = 25;
 sar.yStep_m = fmcw.lambda_m*2;
-sar.numTheta = 1024;
+sar.numTheta = 256;
 sar.thetaMax_deg = 360;
 
 % Display the SAR Scenario
@@ -107,6 +107,9 @@ target.isPNG = false;
 target.isSTL = false;
 target.isRandomPoints = false;
 
+% Display the target
+target.displayTarget();
+
 %% Compute Beat Signal
 target.isGPU = true;
 target.computeTarget();
@@ -133,13 +136,16 @@ im.numZ = 128;
 
 im.isGPU = false;
 im.thetaUpsampleFactor = 1;
-im.method = "Uniform 2-D CSAR 3-D PFA";
+% im.method = "Uniform 2-D CSAR 3-D PFA";
+im.method = "2-D CSAR 3-D BPA";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.25;
 
 %% Reconstruct the Image
+im.isGPU = true;
 im.computeImage();
+im.displayImage();
 
 %% Display the Image with Different Parameters
 im.dBMin = -10;

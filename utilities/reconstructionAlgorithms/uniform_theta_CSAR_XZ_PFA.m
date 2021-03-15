@@ -244,7 +244,7 @@ classdef uniform_theta_CSAR_XZ_PFA < handle
             end
             
             % Recover Image by IFT: p(x,z)
-            sarImage = single(abs(ifftshift(ifftshift(ifftn(sarImageFFT),1),2)));
+            sarImage = single(ifftshift(ifftshift(ifftn(sarImageFFT),1),2));
             clear sarImageFFT
             
             % Declare Spatial Vectors

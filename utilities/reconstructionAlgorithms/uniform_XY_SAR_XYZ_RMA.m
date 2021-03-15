@@ -261,7 +261,7 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
             end
             
             % Recover Image by IFT: p(y,x,z)
-            sarImage = single(abs(ifftn(sarImageFFT)));
+            sarImage = single(ifftn(sarImageFFT));
             clear sarImageFFT focusingFilter
             
             % Reorient Image: p(x,y,z)

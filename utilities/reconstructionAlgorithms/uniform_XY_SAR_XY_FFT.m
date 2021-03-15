@@ -209,7 +209,7 @@ classdef uniform_XY_SAR_XY_FFT < handle
             kZ = single(sqrt((4 * k.^2 - kX.^2 - kY.^2) .* (4 * k.^2 > kX.^2 + kY.^2)));
             
             % Compute Focusing Filter
-            focusingFilter = exp(-1j * kZ * (obj.z0_m + obj.zSlice_m));
+            focusingFilter = exp(-1j * kZ * (obj.zSlice_m - obj.z0_m));
             focusingFilter(4 * k.^2 < kX.^2 + kY.^2) = 0;
             
             % Compute FFT across Y & X Dimensions: S(kY,kX,k)
@@ -224,7 +224,7 @@ classdef uniform_XY_SAR_XY_FFT < handle
             clear sarDataFFT focusingFilter kY kX k kZ
             
             % Recover Image by IFT: p(y,x,z)
-            sarImage = single(abs(ifftn(sarImageFFT)));
+            sarImage = single(ifftn(sarImageFFT));
             clear sarImageFFT focusingFilter
             
             % Reorient Image: p(x,y,z)

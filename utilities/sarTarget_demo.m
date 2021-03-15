@@ -85,7 +85,7 @@ target.png.reflectivity = 1;
 target.png.downsampleFactor = 4;
 
 target.stl.fileName = 'maleTorso.stl';
-target.stl.zCrop_m = 0.3;
+target.stl.zCrop_m = 0.25;
 target.stl.xOffset_m = 0;
 target.stl.yOffset_m = 0;
 target.stl.zOffset_m = 0.25;
@@ -103,9 +103,9 @@ target.rp.ampMin = 0.5;
 target.rp.ampMax = 1;
 
 % Which to use
-target.isTable = true;
+target.isTable = false;
 target.isPNG = false;
-target.isSTL = false;
+target.isSTL = true;
 target.isRandomPoints = false;
 
 % Display the target

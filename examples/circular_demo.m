@@ -57,7 +57,7 @@ ant.displayAntennaArray();
 % When the parameters of a sarScenario object are changed by the user, the
 % object automatically updates itself
 sar.scanMethod = 'Circular';
-sar.numTheta = 256;
+sar.numTheta = 1024;
 sar.thetaMax_deg = 360;
 
 % Display the SAR Scenario
@@ -69,7 +69,8 @@ sar.displaySarScenario();
 target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0   1];
+    0   0   0   1
+    0.1 0 -0.05 1];
 
 target.rp.numTargets = 16;
 target.rp.xMin_m = -0.1;
@@ -95,7 +96,7 @@ target.computeTarget();
 %% Set Image Reconstruction Parameters and Create sarImage Object
 % When the parameters of a sarImage object are changed by the user, the
 % object automatically updates itself
-im.nFFTx = 1024;
+im.nFFTx = 4096;
 im.nFFTz = 512;
 
 im.xMin_m = -0.2;
@@ -113,6 +114,7 @@ im.method = "Uniform 1-D CSAR 2-D PFA";
 
 %% Reconstruct the Image
 im.computeImage();
+im.displayImage();
 
 %% Display the Image with Different Parameters
 im.dBMin = -30;

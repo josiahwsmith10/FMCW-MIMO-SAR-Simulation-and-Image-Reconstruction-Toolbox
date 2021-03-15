@@ -188,11 +188,11 @@ classdef uniform_Y_SAR_Y_FFT < handle
             kZ = single(sqrt((4 * k.^2 - kY.^2) .* (4 * k.^2 > kY.^2)));
             
             % Compute Focusing Filter
-            focusingFilter = exp(-1j * kZ * (obj.z0_m + obj.zSlice_m));
+            focusingFilter = exp(-1j * kZ * (obj.zSlice_m - obj.z0_m));
             focusingFilter(4 * k.^2 < kY.^2) = 0;
             
             % Compute FFT across Y & X Dimensions: S(kY,k)
-            sarDataFFT = fftshift(fft(sarDataPadded,obj.nFFTy,1),1)/obj.nFFTy;
+            sarDataFFT = fftshift(fft((sarDataPadded),obj.nFFTy,1),1)/obj.nFFTy;
             clear sarDataPadded sarData
             
             if obj.isGPU
@@ -203,7 +203,7 @@ classdef uniform_Y_SAR_Y_FFT < handle
             clear sarDataFFT focusingFilter kY k kZ
             
             % Recover Image by IFT: p(y)
-            sarImage = single(abs(ifftn(sarImageFFT)));
+            sarImage = single(ifftn(sarImageFFT));
             clear sarImageFFT focusingFilter
             
             % Declare Spatial Vectors

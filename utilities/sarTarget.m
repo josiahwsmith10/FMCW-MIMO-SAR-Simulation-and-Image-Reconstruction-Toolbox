@@ -48,6 +48,8 @@ classdef sarTarget < handle
         fmcw                        % An fmcwChirpParameters object
         ant                         % A sarAntennaArray object
         sar                         % A sarScenario object
+        
+        isSilent = false            % Boolean whether or not to display updates to the user
     end
     
     methods
@@ -89,7 +91,7 @@ classdef sarTarget < handle
             
             obj.numTargets = size(obj.xyz_m,1);
             obj.xyz_m = single(obj.xyz_m);
-            obj.amp = single(obj.xyz_m);
+            obj.amp = single(obj.amp(:).');
             
             verifyGPU(obj);
         end
@@ -184,7 +186,7 @@ classdef sarTarget < handle
             % stl.fileNameLoaded
             
             try
-                [~,obj.stl.v] = stlread2011("./saved/pngstl/" + obj.stl.fileName);
+                [~,obj.stl.v] = stlread2011(obj.stl.fileName);
             catch
                 obj.stl.isLoaded = false;
                 obj.isSTL = false;
@@ -213,10 +215,6 @@ classdef sarTarget < handle
             % Computes the beat signal. First attempts the fast method then
             % the slow method, if the fast method fails
             
-            if obj.isGPU
-                reset(gpuDevice)
-            end
-            
             if ~obj.ant.isEPC
                 % Get distances
                 try
@@ -231,6 +229,10 @@ classdef sarTarget < handle
                     else
                         amplitudeFactor = 1;
                     end
+                    
+                    obj.R.tx = 0;
+                    obj.R.rx = 0;
+                    
                     obj.isLong = false;
                 catch
                     obj.isLong = true;
@@ -257,9 +259,11 @@ classdef sarTarget < handle
                 amplitudeFactor = gpuArray(amplitudeFactor);
                 R_T_plus_R_R = gpuArray(R_T_plus_R_R);
             end
-            % Create the progress dialog
-            d = waitbar(0,'1','Name',' Generating Beat Signal...',...
-                'CreateCancelBtn','setappdata(gcbf,''canceling'',1)');
+            if ~obj.isSilent
+                % Create the progress dialog
+                d = waitbar(0,'1','Name',' Generating Beat Signal...',...
+                    'CreateCancelBtn','setappdata(gcbf,''canceling'',1)');
+            end
             
             obj.sarData = single(zeros(size(obj.sar.tx.xyz_m,1),obj.fmcw.ADCSamples));
             
@@ -269,61 +273,169 @@ classdef sarTarget < handle
                 end
                 
                 % Fast method
-                tocs = zeros(1,obj.fmcw.ADCSamples);
+                if ~obj.isSilent
+                    tocs = zeros(1,obj.fmcw.ADCSamples);
+                end
                 for indK = 1:obj.fmcw.ADCSamples
-                    if getappdata(d,'canceling')
-                        warning("Beat Signal not Computed!")
-                        obj.sarData = single(zeros([obj.sar.sarSize,obj.fmcw.ADCSamples]));
-                        delete(d);
-                        return;
+                    if ~obj.isSilent
+                        if getappdata(d,'canceling')
+                            warning("Beat Signal not Computed!")
+                            obj.sarData = single(zeros([obj.sar.sarSize,obj.fmcw.ADCSamples]));
+                            delete(d);
+                            return;
+                        end
+                        tic
                     end
-                    tic
                     temp = exp(1j*obj.fmcw.k(indK)*R_T_plus_R_R);
                     if obj.isAmplitudeFactor
                         temp = amplitudeFactor .* temp;
                     end
                     
                     obj.sarData(:,indK) = single(gather(sum(temp,2)));
-                    % Update the progress dialog
+                    if ~obj.isSilent
+                        % Update the progress dialog
+                        tocs(indK) = toc;
+                        waitbar(indK/obj.fmcw.ADCSamples,d,"Generating Beat Signal. Estimated Time Remaining: " + getEstTime(obj,tocs,indK,obj.fmcw.ADCSamples));
+                    end
+                end
+            catch
+                try
+                    % Fast method 2
+                    if ~obj.isSilent
+                        tocs = zeros(1,obj.numTargets);
+                    end
+                    for indTarget = 1:obj.numTargets
+                        if ~obj.isSilent
+                            if getappdata(d,'canceling')
+                                warning("Beat Signal not Computed!")
+                                obj.sarData = single(zeros([obj.sar.sarSize,obj.fmcw.ADCSamples]));
+                                delete(d);
+                                return;
+                            end
+                            tic
+                        end
+                        temp = exp(1j*obj.fmcw.k.*R_T_plus_R_R(:,indTarget));
+                        if obj.isAmplitudeFactor
+                            temp = amplitudeFactor .* temp;
+                        end
+                        
+                        obj.sarData = obj.sarData + single(gather(temp));
+                        % Update the progress dialog
+                        if ~obj.isSilent
+                            tocs(indTarget) = toc;
+                            waitbar(indTarget/obj.numTargets,d,"Generating Beat Signal. Estimated Time Remaining: " + getEstTime(obj,tocs,indTarget,obj.numTargets));
+                        end
+                    end
+                catch
+                    try
+                        R_T_plus_R_R = gather(R_T_plus_R_R);
+                        computeTargetLarge(obj,R_T_plus_R_R,d);
+                    catch
+                        computeTargetSlow(obj,d);
+                    end
+                end
+            end
+            
+            if ~obj.isSilent
+                delete(d);
+            end
+            
+            % Reshape echo signal
+            obj.sarData = reshape(obj.sarData,[obj.sar.sarSize,obj.fmcw.ADCSamples]);
+        end
+        
+        function computeTargetLarge(obj,R_T_plus_R_R,d)
+            [R_unique,~,IC] = unique(R_T_plus_R_R,'stable');
+            if obj.isGPU
+                R_unique = gpuArray(R_unique);
+            end
+            % Remember R_T_plus_R_R = reshape(R_unique(IC),size(R_T_plus_R_R));
+            
+            sizeR = size(R_T_plus_R_R);
+            R_T_plus_R_R = 0;
+            
+            try
+                [temp,~,IC2] = unique(mod(R_unique.*obj.fmcw.k,2*pi),'stable');
+                % Remember R_unique = reshape(temp(IC2),size(R_unique));
+            catch
+                R_unique = gather(R_unique);
+                [temp,~,IC2] = unique(mod(R_unique.*obj.fmcw.k,2*pi),'stable');
+                % Remember R_unique = reshape(temp(IC2),size(R_unique));
+            end
+            if obj.isGPU
+                temp = gpuArray(temp);
+            end
+            temp2 = gather(exp(1j*temp));
+            
+            temp3 = reshape(temp2(IC2),[length(R_unique),obj.fmcw.ADCSamples]);
+            
+            if ~obj.isSilent
+                tocs = zeros(1,obj.fmcw.ADCSamples);
+            end
+            for indK = 1:obj.fmcw.ADCSamples
+                if ~obj.isSilent
+                    if getappdata(d,'canceling')
+                        warning("Beat Signal not Computed!")
+                        obj.sarData = 0;
+                        return;
+                    end
+                    tic
+                end
+                temp = reshape(temp3(IC,indK),sizeR);
+                if obj.isAmplitudeFactor
+                    temp = amplitudeFactor .* temp;
+                end
+                
+                obj.sarData(:,indK) = single(gather(sum(temp,2)));
+                % Update the progress dialog
+                if ~obj.isSilent
                     tocs(indK) = toc;
                     waitbar(indK/obj.fmcw.ADCSamples,d,"Generating Beat Signal. Estimated Time Remaining: " + getEstTime(obj,tocs,indK,obj.fmcw.ADCSamples));
                 end
-            catch
-                % Always works method
+            end
+        end
+        
+        function d = computeTargetSlow(obj,d)
+            % Always works method
+            if ~obj.isSilent
                 tocs = single(zeros(1,obj.fmcw.ADCSamples*obj.numTargets));
                 count = 0;
-                for indSAR = 1:size(obj.sar.rx.xyz_m,1)
+            end
+            for indSAR = 1:size(obj.sar.rx.xyz_m,1)
+                if ~obj.isSilent
                     tic
-                    if ~obj.ant.isEPC
-                        obj.R = struct;
-                        obj.R.tx = pdist2(obj.sar.tx.xyz_m(indSAR,:),obj.xyz_m);
-                        obj.R.rx = pdist2(obj.sar.rx.xyz_m(indSAR,:),obj.xyz_m);
-                        R_T_plus_R_R = obj.R.tx + obj.R.rx;
-                        
-                        % Amplitude Factor
-                        if obj.isAmplitudeFactor
-                            amplitudeFactor = obj.amp./(obj.R.tx .* obj.R.rx);
-                        else
-                            amplitudeFactor = 1;
-                        end
+                end
+                if ~obj.ant.isEPC
+                    obj.R = struct;
+                    obj.R.tx = pdist2(obj.sar.tx.xyz_m(indSAR,:),obj.xyz_m);
+                    obj.R.rx = pdist2(obj.sar.rx.xyz_m(indSAR,:),obj.xyz_m);
+                    R_T_plus_R_R = obj.R.tx + obj.R.rx;
+                    
+                    % Amplitude Factor
+                    if obj.isAmplitudeFactor
+                        amplitudeFactor = obj.amp./(obj.R.tx .* obj.R.rx);
                     else
-                        obj.R = pdist2(obj.sar.vx.xyz_m(indSAR,:),obj.xyz_m);
-                        
-                        % Get echo signal
-                        R_T_plus_R_R = 2*obj.R;
-                        if obj.isAmplitudeFactor
-                            amplitudeFactor = obj.amp./(obj.R).^2;
-                        else
-                            amplitudeFactor = single(1);
-                        end
+                        amplitudeFactor = 1;
                     end
+                else
+                    obj.R = pdist2(obj.sar.vx.xyz_m(indSAR,:),obj.xyz_m);
                     
-                    if obj.isGPU
-                        amplitudeFactor = gpuArray(amplitudeFactor);
-                        R_T_plus_R_R = gpuArray(R_T_plus_R_R);
+                    % Get echo signal
+                    R_T_plus_R_R = 2*obj.R;
+                    if obj.isAmplitudeFactor
+                        amplitudeFactor = obj.amp./(obj.R).^2;
+                    else
+                        amplitudeFactor = single(1);
                     end
-                    
-                    for indK = 1:obj.fmcw.ADCSamples
+                end
+                
+                if obj.isGPU
+                    amplitudeFactor = gpuArray(amplitudeFactor);
+                    R_T_plus_R_R = gpuArray(R_T_plus_R_R);
+                end
+                
+                for indK = 1:obj.fmcw.ADCSamples
+                    if ~obj.isSilent
                         if getappdata(d,'canceling')
                             warning("Beat Signal not Computed!")
                             obj.sarData = single(zeros([obj.sar.sarSize,obj.fmcw.ADCSamples]));
@@ -331,23 +443,20 @@ classdef sarTarget < handle
                             return;
                         end
                         count = count + 1;
-                        temp = exp(1j*obj.fmcw.k(indK)*R_T_plus_R_R);
-                        if obj.isAmplitudeFactor
-                            temp = amplitudeFactor .* temp;
-                        end
-                        
-                        obj.sarData(indSAR,indK) = single(gather(sum(temp,2)));
+                    end
+                    temp = exp(1j*obj.fmcw.k(indK)*R_T_plus_R_R);
+                    if obj.isAmplitudeFactor
+                        temp = amplitudeFactor .* temp;
+                    end
+                    
+                    obj.sarData(indSAR,indK) = single(gather(sum(temp,2)));
+                    if ~obj.isSilent
                         % Update the progress dialog
                         tocs(count) = toc;
                         waitbar(count/(obj.fmcw.ADCSamples*size(obj.sar.rx.xyz_m,1)),d,"Generating Beat Signal Using Slow Method. Estimated Time Remaining: " + getEstTime(obj,tocs,count,obj.fmcw.ADCSamples*size(obj.sar.rx.xyz_m,1)));
                     end
                 end
             end
-            
-            delete(d);
-            
-            % Reshape echo signal
-            obj.sarData = reshape(obj.sarData,[obj.sar.sarSize,obj.fmcw.ADCSamples]);
         end
         
         % Plot/figure functions
@@ -378,7 +487,7 @@ classdef sarTarget < handle
                 return;
             end
             
-            if isempty(obj.fig.f)
+            if isempty(obj.fig.f) || ~isvalid(obj.fig.h)
                 initializeFigures(obj);
             end
             

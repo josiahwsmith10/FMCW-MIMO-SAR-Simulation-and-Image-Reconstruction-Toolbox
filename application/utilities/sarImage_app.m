@@ -191,7 +191,7 @@ classdef sarImage_app < handle
             obj.dBMin = app.MindBEditField.Value;
             obj.fontSize = app.FontSizeEditField.Value;
             
-            clf(obj.fig.h)
+            clf(obj.fig.f)
             obj.reconstructor.displayImage(obj);
         end
         

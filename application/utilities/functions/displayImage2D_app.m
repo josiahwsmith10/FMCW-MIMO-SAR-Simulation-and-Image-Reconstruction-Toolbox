@@ -27,16 +27,16 @@ clear imgXYZ imgZXY
 
 mesh(h,x_m,y_m,imgYX_dB,'FaceColor','interp','EdgeColor','none')
 
-colormap('jet')
-hc = colorbar;
+colormap(h,'jet')
+hc = colorbar(h);
 
 view(h,2)
 caxis(h,[im.dBMin 0])
 
 ylabel(hc, 'dB','fontsize',im.fontSize)
-xlabel(xlab,'fontsize',im.fontSize)
-ylabel(ylab,'fontsize',im.fontSize)
+xlabel(h,xlab,'fontsize',im.fontSize)
+ylabel(h,ylab,'fontsize',im.fontSize)
 xlim(h,[x_m(1),x_m(end)])
 ylim(h,[y_m(1),y_m(end)])
-title("Reconstructed Image",'fontsize',im.fontSize)
+title(h,"Reconstructed Image",'fontsize',im.fontSize)
 end

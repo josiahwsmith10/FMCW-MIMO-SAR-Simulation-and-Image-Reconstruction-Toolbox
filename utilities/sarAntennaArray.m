@@ -140,7 +140,7 @@ classdef sarAntennaArray < handle
         function displayAntennaArray(obj)
             % Displays the antenna arrays in the figure
             
-            if isempty(obj.fig.f)
+            if isempty(obj.fig.f) || ~isvalid(obj.fig.h)
                 initializeFigures(obj);
             end
             

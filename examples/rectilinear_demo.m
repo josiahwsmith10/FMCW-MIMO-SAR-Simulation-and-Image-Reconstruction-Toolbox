@@ -137,14 +137,17 @@ im.numZ = 128;
 im.isGPU = false;
 % im.zSlice_m = 0.25; % Use if reconstructing a 2-D image
 im.method = "Uniform 2-D SAR 3-D RMA";
+% im.method = "2-D SAR 3-D BPA";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.25;
 
 %% Reconstruct the Image
+im.isGPU = true;
 im.computeImage();
+im.displayImage();
 
 %% Display the Image with Different Parameters
-im.dBMin = -30;
+im.dBMin = -25;
 im.fontSize = 12;
 im.displayImage();

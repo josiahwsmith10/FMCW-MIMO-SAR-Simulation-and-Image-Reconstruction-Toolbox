@@ -59,6 +59,8 @@ classdef sarImage < handle
         zRef_m = 0.25               % z location of reference plane for multistatic-to-monostatic approximation
         zSlice_m                    % z slice of interest when reconstructing a 2-D x-y image, in meters
         thetaUpsampleFactor = 1     % Upsample factor on the theta dimension of the SAR data operated in circular or cylindrical mode
+        
+        isSilent = false            % Boolean whether or not to display updates to the user
     end
     
     methods
@@ -98,11 +100,19 @@ classdef sarImage < handle
             update(obj);
             
             if obj.method ~= "-" && ~obj.reconstructor.isFail
-                disp("Attempting image reconstruction using " + obj.method + " method.")
+                
+                if ~obj.isSilent
+                    disp("Attempting image reconstruction using " + obj.method + " method.")
+                end
+                
                 obj.imXYZ = obj.reconstructor.computeReconstruction();
-                if ~obj.reconstructor.isFail
+                
+                if ~obj.isSilent
                     disp("Done reconstructing image using " + obj.method + " method.")
-                    displayImage(obj);
+                end
+                
+                if obj.reconstructor.isFail
+                    disp(obj.method + " failed!!")
                 end
             end
         end
@@ -179,11 +189,10 @@ classdef sarImage < handle
         function displayImage(obj)
             % Displays the reconstructed image
             
-            if isempty(obj.fig.f)
+            if isempty(obj.fig.f) || ~isvalid(obj.fig.h)
                 initializeFigures(obj);
             end
             
-            clf(obj.fig.h)
             obj.reconstructor.displayImage();
         end
         

@@ -15,6 +15,92 @@
 % GNU General Public License for more details.
 
 function mediumBPA(obj,k)
+try
+    mediumBPA1(obj,k);
+catch
+    try
+        mediumBPA2(obj,k);
+    catch
+        slowBPA(obj,k);
+    end
+end
+end
+
+function mediumBPA1(obj,k)
+if obj.isGPU
+    reset(gpuDevice)
+end
+
+obj.imXYZ = single(zeros(1,size(obj.target_xyz_m,1)));
+numSAR = size(obj.tx_xyz_m,1);
+tocs = single(zeros(1,numSAR));
+for indSAR = 1:numSAR
+    tic
+    
+    if ~obj.ant.isEPC
+        Rt = pdist2(obj.tx_xyz_m(indSAR,:),obj.target_xyz_m);
+        Rr = pdist2(obj.rx_xyz_m(indSAR,:),obj.target_xyz_m);
+        amplitudeFactor = Rt .* Rr;
+        R_T_plus_R_R = Rt + Rr;
+    else
+        R = pdist2(obj.vx_xyz_m(indSAR,:),obj.target_xyz_m);
+        R_T_plus_R_R = 2*R;
+        amplitudeFactor = R.^2;
+    end
+    
+    if obj.isGPU
+        R_T_plus_R_R = gpuArray(R_T_plus_R_R);
+    end
+    
+    bpaKernel = gather(exp(-1j*k.*R_T_plus_R_R));
+    if obj.isAmplitudeFactor
+        bpaKernel = bpaKernel .* amplitudeFactor(indSAR);
+    end
+    obj.imXYZ = obj.imXYZ + sum(obj.sarData(indSAR,:,:) .* bpaKernel,3);
+    % Update the progress dialog
+    tocs(indSAR) = toc;
+    disp("Iteration " + indSAR + "/" + numSAR + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indSAR,numSAR));
+end
+end
+
+function mediumBPA2(obj,k)
+if obj.isGPU
+    reset(gpuDevice)
+end
+
+obj.imXYZ = single(zeros(1,size(obj.target_xyz_m,1)));
+numTargetVoxels = size(obj.target_xyz_m,1);
+tocs = single(zeros(1,numTargetVoxels));
+for indTarget = 1:numTargetVoxels
+    tic
+    
+    if ~obj.ant.isEPC
+        Rt = pdist2(obj.tx_xyz_m,obj.target_xyz_m(indTarget,:));
+        Rr = pdist2(obj.rx_xyz_m,obj.target_xyz_m(indTarget,:));
+        amplitudeFactor = Rt .* Rr;
+        R_T_plus_R_R = Rt + Rr;
+    else
+        R = pdist2(obj.vx_xyz_m,obj.target_xyz_m(indTarget,:));
+        R_T_plus_R_R = 2*R;
+        amplitudeFactor = R.^2;
+    end
+    
+    if obj.isGPU
+        R_T_plus_R_R = gpuArray(R_T_plus_R_R);
+    end
+    
+    bpaKernel = gather(exp(-1j*k.*R_T_plus_R_R));
+    if obj.isAmplitudeFactor
+        bpaKernel = bpaKernel .* amplitudeFactor;
+    end
+    obj.imXYZ(indTarget) = sum(obj.sarData .* bpaKernel,'all');
+    % Update the progress dialog
+    tocs(indTarget) = toc;
+    disp("Iteration " + indTarget + "/" + numTargetVoxels + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indTarget,numTargetVoxels));
+end
+end
+
+function slowBPA(obj,k)
 obj.imXYZ = single(zeros(1,size(obj.target_xyz_m,1)));
 tocs = single(zeros(1,2^14));
 count = 0;

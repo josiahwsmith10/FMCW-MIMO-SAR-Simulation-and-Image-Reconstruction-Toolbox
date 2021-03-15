@@ -19,7 +19,7 @@ h = im.fig.h;
 im.vSliceIndex = 1:length(im.z_m);
 
 % Organize in meshgrid format
-imgZXY = permute(im.imXYZ,[3,1,2]);
+imgZXY = permute(abs(im.imXYZ),[3,1,2]);
 
 U = reshape(im.x_m,1,[],1);
 V = reshape(im.z_m,[],1,1);

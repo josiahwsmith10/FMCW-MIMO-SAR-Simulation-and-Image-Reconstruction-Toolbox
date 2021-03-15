@@ -117,6 +117,7 @@ im.zRef_m = 0.25;
 
 %% Reconstruct the Image
 im.computeImage();
+im.displayImage();
 
 %% Display the Image with Different Parameters
 im.dBMin = -30;

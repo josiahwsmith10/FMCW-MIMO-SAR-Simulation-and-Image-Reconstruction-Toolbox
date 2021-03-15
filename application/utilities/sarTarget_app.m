@@ -351,7 +351,7 @@ classdef sarTarget_app < handle
                 for indK = 1:app.fmcw.ADCSamples
                     if d.CancelRequested
                         warning("Beat Signal not Computed!")
-                        obj.sarData = 0;
+                        obj.sarData = single(zeros([app.sar.sarSize,app.fmcw.ADCSamples]));
                         return;
                     end
                     tic
@@ -373,7 +373,7 @@ classdef sarTarget_app < handle
                     for indTarget = 1:app.target.numTargets
                         if d.CancelRequested
                             warning("Beat Signal not Computed!")
-                            obj.sarData = 0;
+                            obj.sarData = single(zeros([app.sar.sarSize,app.fmcw.ADCSamples]));
                             return;
                         end
                         tic
@@ -403,7 +403,7 @@ classdef sarTarget_app < handle
             obj.sarData = reshape(obj.sarData,[app.sar.sarSize,app.fmcw.ADCSamples]);
         end
         
-        function obj = computeTargetSlow(obj,app)
+        function obj = computeTargetSlow(obj,app,d)
             d.Title = "Generating Echo Signal Using Slow Method";
             % Always works method
             tocs = single(zeros(1,app.fmcw.ADCSamples*obj.numTargets));
@@ -442,7 +442,7 @@ classdef sarTarget_app < handle
                 for indK = 1:app.fmcw.ADCSamples
                     if d.CancelRequested
                         warning("Beat Signal not Computed!")
-                        obj.sarData = 0;
+                        obj.sarData = single(zeros([app.sar.sarSize,app.fmcw.ADCSamples]));
                         return;
                     end
                     count = count + 1;
@@ -492,7 +492,7 @@ classdef sarTarget_app < handle
             for indK = 1:app.fmcw.ADCSamples
                 if d.CancelRequested
                     warning("Beat Signal not Computed!")
-                    obj.sarData = 0;
+                    obj.sarData = single(zeros([app.sar.sarSize,app.fmcw.ADCSamples]));
                     return;
                 end
                 tic

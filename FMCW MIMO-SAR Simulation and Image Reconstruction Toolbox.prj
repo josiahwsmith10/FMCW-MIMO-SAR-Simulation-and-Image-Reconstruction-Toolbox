@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="393218684" file="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox</param.appname>
     <param.authnamewatermark />
     <param.email />
@@ -54,7 +54,10 @@
 % All files matching a pattern in all subfolders of the toolbox folder:
 % **/*.bak
 %
-demos.xml</param.exclude.filters>
+demos.xml
+examples/sar1DMIMOAWR1243_64_rand8192.mat
+.git/
+.gitignore</param.exclude.filters>
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
     <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;examples&gt;
@@ -104,7 +107,248 @@ demos.xml</param.exclude.filters>
     </param.registered.apps>
     <param.docs>${PROJECT_ROOT}\docs\info.xml</param.docs>
     <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
-    <param.matlabpath.excludes />
+    <param.matlabpath.excludes>
+      <item>/.git</item>
+      <item>/.git/hooks</item>
+      <item>/.git/info</item>
+      <item>/.git/logs</item>
+      <item>/.git/logs/refs</item>
+      <item>/.git/logs/refs/heads</item>
+      <item>/.git/objects</item>
+      <item>/.git/objects/00</item>
+      <item>/.git/objects/01</item>
+      <item>/.git/objects/02</item>
+      <item>/.git/objects/03</item>
+      <item>/.git/objects/05</item>
+      <item>/.git/objects/06</item>
+      <item>/.git/objects/07</item>
+      <item>/.git/objects/08</item>
+      <item>/.git/objects/09</item>
+      <item>/.git/objects/0a</item>
+      <item>/.git/objects/0b</item>
+      <item>/.git/objects/0c</item>
+      <item>/.git/objects/11</item>
+      <item>/.git/objects/12</item>
+      <item>/.git/objects/13</item>
+      <item>/.git/objects/14</item>
+      <item>/.git/objects/15</item>
+      <item>/.git/objects/16</item>
+      <item>/.git/objects/17</item>
+      <item>/.git/objects/18</item>
+      <item>/.git/objects/1a</item>
+      <item>/.git/objects/1b</item>
+      <item>/.git/objects/1c</item>
+      <item>/.git/objects/1e</item>
+      <item>/.git/objects/1f</item>
+      <item>/.git/objects/20</item>
+      <item>/.git/objects/21</item>
+      <item>/.git/objects/22</item>
+      <item>/.git/objects/23</item>
+      <item>/.git/objects/24</item>
+      <item>/.git/objects/25</item>
+      <item>/.git/objects/26</item>
+      <item>/.git/objects/27</item>
+      <item>/.git/objects/28</item>
+      <item>/.git/objects/29</item>
+      <item>/.git/objects/2a</item>
+      <item>/.git/objects/2b</item>
+      <item>/.git/objects/2c</item>
+      <item>/.git/objects/2d</item>
+      <item>/.git/objects/2e</item>
+      <item>/.git/objects/2f</item>
+      <item>/.git/objects/30</item>
+      <item>/.git/objects/31</item>
+      <item>/.git/objects/32</item>
+      <item>/.git/objects/33</item>
+      <item>/.git/objects/34</item>
+      <item>/.git/objects/35</item>
+      <item>/.git/objects/36</item>
+      <item>/.git/objects/37</item>
+      <item>/.git/objects/38</item>
+      <item>/.git/objects/39</item>
+      <item>/.git/objects/3a</item>
+      <item>/.git/objects/3b</item>
+      <item>/.git/objects/3c</item>
+      <item>/.git/objects/3d</item>
+      <item>/.git/objects/3e</item>
+      <item>/.git/objects/40</item>
+      <item>/.git/objects/41</item>
+      <item>/.git/objects/42</item>
+      <item>/.git/objects/44</item>
+      <item>/.git/objects/45</item>
+      <item>/.git/objects/46</item>
+      <item>/.git/objects/47</item>
+      <item>/.git/objects/48</item>
+      <item>/.git/objects/49</item>
+      <item>/.git/objects/4a</item>
+      <item>/.git/objects/4c</item>
+      <item>/.git/objects/4d</item>
+      <item>/.git/objects/4e</item>
+      <item>/.git/objects/51</item>
+      <item>/.git/objects/52</item>
+      <item>/.git/objects/54</item>
+      <item>/.git/objects/55</item>
+      <item>/.git/objects/56</item>
+      <item>/.git/objects/57</item>
+      <item>/.git/objects/58</item>
+      <item>/.git/objects/59</item>
+      <item>/.git/objects/5a</item>
+      <item>/.git/objects/5b</item>
+      <item>/.git/objects/5c</item>
+      <item>/.git/objects/5d</item>
+      <item>/.git/objects/5e</item>
+      <item>/.git/objects/5f</item>
+      <item>/.git/objects/60</item>
+      <item>/.git/objects/61</item>
+      <item>/.git/objects/62</item>
+      <item>/.git/objects/63</item>
+      <item>/.git/objects/64</item>
+      <item>/.git/objects/65</item>
+      <item>/.git/objects/67</item>
+      <item>/.git/objects/69</item>
+      <item>/.git/objects/6a</item>
+      <item>/.git/objects/6b</item>
+      <item>/.git/objects/6c</item>
+      <item>/.git/objects/6f</item>
+      <item>/.git/objects/6e</item>
+      <item>/.git/objects/70</item>
+      <item>/.git/objects/71</item>
+      <item>/.git/objects/73</item>
+      <item>/.git/objects/74</item>
+      <item>/.git/objects/75</item>
+      <item>/.git/objects/76</item>
+      <item>/.git/objects/77</item>
+      <item>/.git/objects/78</item>
+      <item>/.git/objects/79</item>
+      <item>/.git/objects/7a</item>
+      <item>/.git/objects/7b</item>
+      <item>/.git/objects/7c</item>
+      <item>/.git/objects/7d</item>
+      <item>/.git/objects/7e</item>
+      <item>/.git/objects/7f</item>
+      <item>/.git/objects/80</item>
+      <item>/.git/objects/81</item>
+      <item>/.git/objects/83</item>
+      <item>/.git/objects/84</item>
+      <item>/.git/objects/85</item>
+      <item>/.git/objects/86</item>
+      <item>/.git/objects/87</item>
+      <item>/.git/objects/88</item>
+      <item>/.git/objects/89</item>
+      <item>/.git/objects/8a</item>
+      <item>/.git/objects/8b</item>
+      <item>/.git/objects/8c</item>
+      <item>/.git/objects/8d</item>
+      <item>/.git/objects/8e</item>
+      <item>/.git/objects/8f</item>
+      <item>/.git/objects/90</item>
+      <item>/.git/objects/91</item>
+      <item>/.git/objects/92</item>
+      <item>/.git/objects/93</item>
+      <item>/.git/objects/94</item>
+      <item>/.git/objects/95</item>
+      <item>/.git/objects/96</item>
+      <item>/.git/objects/97</item>
+      <item>/.git/objects/98</item>
+      <item>/.git/objects/99</item>
+      <item>/.git/objects/9a</item>
+      <item>/.git/objects/9b</item>
+      <item>/.git/objects/9c</item>
+      <item>/.git/objects/9d</item>
+      <item>/.git/objects/9e</item>
+      <item>/.git/objects/9f</item>
+      <item>/.git/objects/a0</item>
+      <item>/.git/objects/a1</item>
+      <item>/.git/objects/a2</item>
+      <item>/.git/objects/a3</item>
+      <item>/.git/objects/a4</item>
+      <item>/.git/objects/a5</item>
+      <item>/.git/objects/a6</item>
+      <item>/.git/objects/a7</item>
+      <item>/.git/objects/a8</item>
+      <item>/.git/objects/a9</item>
+      <item>/.git/objects/aa</item>
+      <item>/.git/objects/ab</item>
+      <item>/.git/objects/ac</item>
+      <item>/.git/objects/ad</item>
+      <item>/.git/objects/ae</item>
+      <item>/.git/objects/af</item>
+      <item>/.git/objects/b0</item>
+      <item>/.git/objects/b3</item>
+      <item>/.git/objects/b4</item>
+      <item>/.git/objects/b5</item>
+      <item>/.git/objects/b6</item>
+      <item>/.git/objects/b7</item>
+      <item>/.git/objects/b8</item>
+      <item>/.git/objects/b9</item>
+      <item>/.git/objects/ba</item>
+      <item>/.git/objects/bb</item>
+      <item>/.git/objects/bc</item>
+      <item>/.git/objects/be</item>
+      <item>/.git/objects/c0</item>
+      <item>/.git/objects/c1</item>
+      <item>/.git/objects/c2</item>
+      <item>/.git/objects/c3</item>
+      <item>/.git/objects/c4</item>
+      <item>/.git/objects/c5</item>
+      <item>/.git/objects/c6</item>
+      <item>/.git/objects/c7</item>
+      <item>/.git/objects/c8</item>
+      <item>/.git/objects/c9</item>
+      <item>/.git/objects/ca</item>
+      <item>/.git/objects/cb</item>
+      <item>/.git/objects/cc</item>
+      <item>/.git/objects/cd</item>
+      <item>/.git/objects/ce</item>
+      <item>/.git/objects/cf</item>
+      <item>/.git/objects/d0</item>
+      <item>/.git/objects/d1</item>
+      <item>/.git/objects/d2</item>
+      <item>/.git/objects/d3</item>
+      <item>/.git/objects/d4</item>
+      <item>/.git/objects/d5</item>
+      <item>/.git/objects/d6</item>
+      <item>/.git/objects/d8</item>
+      <item>/.git/objects/d9</item>
+      <item>/.git/objects/db</item>
+      <item>/.git/objects/dc</item>
+      <item>/.git/objects/dd</item>
+      <item>/.git/objects/de</item>
+      <item>/.git/objects/df</item>
+      <item>/.git/objects/e0</item>
+      <item>/.git/objects/e2</item>
+      <item>/.git/objects/e1</item>
+      <item>/.git/objects/e3</item>
+      <item>/.git/objects/e4</item>
+      <item>/.git/objects/e5</item>
+      <item>/.git/objects/e6</item>
+      <item>/.git/objects/e7</item>
+      <item>/.git/objects/e9</item>
+      <item>/.git/objects/ea</item>
+      <item>/.git/objects/eb</item>
+      <item>/.git/objects/ec</item>
+      <item>/.git/objects/ed</item>
+      <item>/.git/objects/ee</item>
+      <item>/.git/objects/f0</item>
+      <item>/.git/objects/f1</item>
+      <item>/.git/objects/f2</item>
+      <item>/.git/objects/f3</item>
+      <item>/.git/objects/f4</item>
+      <item>/.git/objects/f5</item>
+      <item>/.git/objects/f6</item>
+      <item>/.git/objects/f8</item>
+      <item>/.git/objects/fa</item>
+      <item>/.git/objects/fb</item>
+      <item>/.git/objects/fc</item>
+      <item>/.git/objects/fd</item>
+      <item>/.git/objects/fe</item>
+      <item>/.git/objects/ff</item>
+      <item>/.git/objects/info</item>
+      <item>/.git/objects/pack</item>
+      <item>/.git/refs</item>
+      <item>/.git/refs/heads</item>
+      <item>/.git/refs/tags</item>
+    </param.matlabpath.excludes>
     <param.javaclasspath.excludes />
     <param.exported.on.package>false</param.exported.on.package>
     <param.required.addons />
@@ -132,7 +376,6 @@ demos.xml</param.exclude.filters>
       <param.exclude.pcodedmfiles />
       <param.demosxml />
       <param.apps />
-      <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
       <param.exported.on.package />
       <param.required.addons />
@@ -150,8 +393,6 @@ demos.xml</param.exclude.filters>
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\.git</file>
-      <file>${PROJECT_ROOT}\.gitignore</file>
       <file>${PROJECT_ROOT}\application</file>
       <file>${PROJECT_ROOT}\DesktopToolset.xml</file>
       <file>${PROJECT_ROOT}\docs</file>

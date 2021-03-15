@@ -108,8 +108,7 @@ im.zMax_m = 0.5;
 im.numY = 256;
 im.numZ = 256;
 
-im.isGPU = false;
-% im.zSlice_m = 0.25; % Use if reconstructing a 1-D image
+im.isGPU = true;
 im.method = "Uniform 1-D SAR 2-D RMA";
 
 im.isMult2Mono = true;
@@ -120,7 +119,7 @@ im.computeImage();
 im.displayImage();
 
 %% Compute the Ideal Image from the YZ Imaging Scene and Display
-imIdeal2D = computeIdeal2D(target,im,"YZ",2e-3,2e-3);
+imIdeal2D = computeIdeal2D(target,im,"YZ",3e-3,3e-3);
 figure
 plotXYdB(imIdeal2D,im.y_m,im.z_m,-25,"y (m)","z (m)","Ideal Image",12)
 
@@ -144,7 +143,7 @@ for indSample = 1:numSamples
     im.computeImage();
     
     radarImages(:,:,indSample) = im.imXYZ;
-    idealImages(:,:,indSample) = computeIdeal2D(target,im,"YZ",2e-3,2e-3);
+    idealImages(:,:,indSample) = computeIdeal2D(target,im,"YZ",3e-3,3e-3);
     disp("Iteration " + indSample + "/" + numSamples + " Done");
 end
 
@@ -153,6 +152,6 @@ indRand = randi(numSamples);
 
 figure
 subplot(121)
-plotXYdB(radarImages(:,:,indRand),im.y_m,im.z_m,-25,"y (m)","z (m)","Radar Image + #" + indRand,12)
+plotXYdB(radarImages(:,:,indRand),im.y_m,im.z_m,-25,"y (m)","z (m)","Radar Image #" + indRand,12)
 subplot(122)
-plotXYdB(idealImages(:,:,indRand),im.y_m,im.z_m,-25,"y (m)","z (m)","Ideal Image + #" + indRand,12)
+plotXYdB(idealImages(:,:,indRand),im.y_m,im.z_m,-25,"y (m)","z (m)","Ideal Image #" + indRand,12)

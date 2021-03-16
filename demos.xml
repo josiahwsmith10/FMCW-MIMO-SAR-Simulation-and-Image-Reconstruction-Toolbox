@@ -6,6 +6,39 @@
    <website/>
    <description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</description>
    <demosection>
+      <label>examples</label>
+      <demoitem>
+         <label>circular_demo</label>
+         <type>other</type>
+         <source>circular_demo</source>
+         <file>examples/html/circular_demo.html</file>
+      </demoitem>
+      <demoitem>
+         <label>cylindrical_demo</label>
+         <type>other</type>
+         <source>cylindrical_demo</source>
+         <file>examples/html/cylindrical_demo.html</file>
+      </demoitem>
+      <demoitem>
+         <label>dataset_demo</label>
+         <type>other</type>
+         <source>dataset_demo</source>
+         <file>examples/html/dataset_demo.html</file>
+      </demoitem>
+      <demoitem>
+         <label>linear_demo</label>
+         <type>other</type>
+         <source>linear_demo</source>
+         <file>examples/html/linear_demo.html</file>
+      </demoitem>
+      <demoitem>
+         <label>rectilinear_demo</label>
+         <type>other</type>
+         <source>rectilinear_demo</source>
+         <file>examples/html/rectilinear_demo.html</file>
+      </demoitem>
+   </demosection>
+   <demosection>
       <label>utilities</label>
       <demoitem>
          <label>fmcwChirpParameters</label>

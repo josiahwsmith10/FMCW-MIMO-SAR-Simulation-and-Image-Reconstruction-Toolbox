@@ -218,7 +218,7 @@ classdef sarScenario < handle
         end
         
         function initializeFigures(obj)
-            % Initilizes the figures
+            % Initializes the figures
             
             closeFigures(obj)
             set(0,'DefaultFigureWindowStyle','docked')

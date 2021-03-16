@@ -6,8 +6,8 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>sarTarget_demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-03"><meta name="DC.source" content="sarTarget_demo.m"><style type="text/css">
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+      --><title>sarTarget_demo</title><meta name="generator" content="MATLAB 9.10"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-16"><meta name="DC.source" content="sarTarget_demo.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
 html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
@@ -67,29 +67,40 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Include Necessary Directories</a></li><li><a href="#2">Create the Objects</a></li><li><a href="#3">Set FMCW Parameters</a></li><li><a href="#4">Set Antenna Array Properties</a></li><li><a href="#5">Set SAR Scenario Parameters</a></li><li><a href="#6">Set Target Parameters</a></li><li><a href="#7">Compute Beat Signal</a></li><li><a href="#8">Load in Target</a></li><li><a href="#9">Save Target</a></li></ul></div><h2 id="1">Include Necessary Directories</h2><pre class="codeinput">addpath(genpath(<span class="string">"../"</span>));
-</pre><h2 id="2">Create the Objects</h2><pre class="codeinput">fmcw = fmcwChirpParameters();
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Include Necessary Directories</a></li><li><a href="#3">Create the Objects</a></li><li><a href="#4">Set FMCW Parameters</a></li><li><a href="#5">Set Antenna Array Properties</a></li><li><a href="#6">Set SAR Scenario Parameters</a></li><li><a href="#7">Set Target Parameters</a></li><li><a href="#8">Compute Beat Signal</a></li><li><a href="#9">Load in Target</a></li><li><a href="#10">Save Target</a></li></ul></div><pre class="codeinput"><span class="comment">% sarTarget_demo - A Short Demonstration of the sarTarget class</span>
+<span class="comment">% Copyright (C) 2021 Josiah W. Smith</span>
+<span class="comment">%</span>
+<span class="comment">% This program is free software: you can redistribute it and/or modify</span>
+<span class="comment">% it under the terms of the GNU General Public License as published by</span>
+<span class="comment">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">% (at your option) any later version.</span>
+<span class="comment">%</span>
+<span class="comment">% This program is distributed in the hope that it will be useful,</span>
+<span class="comment">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="comment">% GNU General Public License for more details.</span>
+</pre><h2 id="2">Include Necessary Directories</h2><pre class="codeinput">addpath(genpath(<span class="string">"../"</span>))
+</pre><h2 id="3">Create the Objects</h2><pre class="codeinput">fmcw = fmcwChirpParameters();
 ant = sarAntennaArray(fmcw);
 sar = sarScenario(ant);
 target = sarTarget(fmcw,ant,sar);
 
 doc <span class="string">sarTarget</span>
-</pre><h2 id="3">Set FMCW Parameters</h2><p>When the parameters of an fmcwChirpParameters object are changed by the user, the object automatically updates itself, namely the property 'k' and other dependencies of the changed parameters.</p><pre class="codeinput">fmcw.f0 = 77*1e9;
-fmcw.K = 100.036*1e12;
+</pre><h2 id="4">Set FMCW Parameters</h2><p>When the parameters of an fmcwChirpParameters object are changed by the user, the object automatically updates itself, namely the property 'k' and other dependencies of the changed parameters.</p><pre class="codeinput">fmcw.f0 = 300*1e9;
+fmcw.K = 200*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
-fmcw.fC = 79*1e9;
-</pre><h2 id="4">Set Antenna Array Properties</h2><p>When the parameters of an antennaArray object are changed by the user, the object automatically updates itself</p><pre class="codeinput">ant.isEPC = false;
+fmcw.ADCSamples = 50;
+fmcw.fS = 1000*1e3;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fC = 305*1e9;
+</pre><h2 id="5">Set Antenna Array Properties</h2><p>When the parameters of an antennaArray object are changed by the user, the object automatically updates itself</p><pre class="codeinput">ant.isEPC = false;
 ant.z0_m = 0;
-<span class="comment">% Antenna array from xWR1x43</span>
+<span class="comment">% Small MIMO Array</span>
 ant.tableTx = [
-    0   0   1.5 5   1
-    0.5 0   2.5 5   0
-    0   0   3.5 5   1];
+    0   0   2   0   1
+    0   0   4   0   1];
 ant.tableRx = [
     0   0   0   0   1
     0   0   0.5 0   1
@@ -98,7 +109,7 @@ ant.tableRx = [
 
 <span class="comment">% Display the Antenna Array</span>
 ant.displayAntennaArray();
-</pre><img vspace="5" hspace="5" src="sarTarget_demo_01.png" alt=""> <h2 id="5">Set SAR Scenario Parameters</h2><p>When the parameters of a sarScenario object are changed by the user, the object automatically updates itself</p><pre class="codeinput">sar.scanMethod = <span class="string">'Rectilinear'</span>;
+</pre><img vspace="5" hspace="5" src="sarTarget_demo_01.png" alt=""> <h2 id="6">Set SAR Scenario Parameters</h2><p>When the parameters of a sarScenario object are changed by the user, the object automatically updates itself</p><pre class="codeinput">sar.scanMethod = <span class="string">'Rectilinear'</span>;
 sar.xStep_m = fmcw.lambda_m/4;
 sar.numX = 200;
 sar.yStep_m = fmcw.lambda_m*2;
@@ -106,10 +117,10 @@ sar.numY = 25;
 
 <span class="comment">% Display the SAR Scenario</span>
 sar.displaySarScenario();
-</pre><img vspace="5" hspace="5" src="sarTarget_demo_02.png" alt=""> <h2 id="6">Set Target Parameters</h2><p>When the parameters of a sarTarget object are changed by the user, the object automatically updates itself</p><pre class="codeinput">target.isAmplitudeFactor = false;
+</pre><img vspace="5" hspace="5" src="sarTarget_demo_02.png" alt=""> <h2 id="7">Set Target Parameters</h2><p>When the parameters of a sarTarget object are changed by the user, the object automatically updates itself</p><pre class="codeinput">target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0.25    1];
+    0   0   0.1 1];
 
 target.png.fileName = <span class="string">'circle.png'</span>;
 target.png.xStep_m = 1e-3;
@@ -120,8 +131,8 @@ target.png.zOffset_m = 0.25;
 target.png.reflectivity = 1;
 target.png.downsampleFactor = 4;
 
-target.stl.fileName = <span class="string">'maleTorso.stl'</span>;
-target.stl.zCrop_m = 0.3;
+target.stl.fileName = <span class="string">'ar15.stl'</span>;
+target.stl.zCrop_m = 0.25;
 target.stl.xOffset_m = 0;
 target.stl.yOffset_m = 0;
 target.stl.zOffset_m = 0.25;
@@ -146,15 +157,28 @@ target.isRandomPoints = false;
 
 <span class="comment">% Display the target</span>
 target.displayTarget();
-</pre><img vspace="5" hspace="5" src="sarTarget_demo_03.png" alt=""> <h2 id="7">Compute Beat Signal</h2><pre class="codeinput">target.isGPU = true;
+</pre><img vspace="5" hspace="5" src="sarTarget_demo_03.png" alt=""> <h2 id="8">Compute Beat Signal</h2><pre class="codeinput">target.isGPU = true;
 target.computeTarget();
-</pre><h2 id="8">Load in Target</h2><pre class="codeinput">target.loadTarget(<span class="string">"psf"</span>);
-</pre><h2 id="9">Save Target</h2><pre class="codeinput">target.saveTarget(<span class="string">"psf_2"</span>);
+</pre><h2 id="9">Load in Target</h2><pre class="codeinput">target.loadTarget(<span class="string">"psf"</span>);
+</pre><h2 id="10">Save Target</h2><pre class="codeinput">target.saveTarget(<span class="string">"psf_2"</span>);
 </pre><pre class="codeoutput">Target saved to: psf_2
-</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
+% sarTarget_demo - A Short Demonstration of the sarTarget class
+% Copyright (C) 2021 Josiah W. Smith
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
 %% Include Necessary Directories
-addpath(genpath("../"));
+addpath(genpath("../"))
 
 %% Create the Objects
 fmcw = fmcwChirpParameters();
@@ -168,26 +192,25 @@ doc sarTarget
 % When the parameters of an fmcwChirpParameters object are changed by the
 % user, the object automatically updates itself, namely the property 'k'
 % and other dependencies of the changed parameters.
-fmcw.f0 = 77*1e9;
-fmcw.K = 100.036*1e12;
+fmcw.f0 = 300*1e9;
+fmcw.K = 200*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
-fmcw.fC = 79*1e9;
+fmcw.ADCSamples = 50;
+fmcw.fS = 1000*1e3;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fC = 305*1e9;
 
 %% Set Antenna Array Properties
 % When the parameters of an antennaArray object are changed by the user, 
 % the object automatically updates itself
 ant.isEPC = false;
 ant.z0_m = 0;
-% Antenna array from xWR1x43
+% Small MIMO Array
 ant.tableTx = [
-    0   0   1.5 5   1
-    0.5 0   2.5 5   0
-    0   0   3.5 5   1];
+    0   0   2   0   1
+    0   0   4   0   1];
 ant.tableRx = [
     0   0   0   0   1
     0   0   0.5 0   1
@@ -215,7 +238,7 @@ sar.displaySarScenario();
 target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0.25    1];
+    0   0   0.1 1];
 
 target.png.fileName = 'circle.png';
 target.png.xStep_m = 1e-3;
@@ -226,8 +249,8 @@ target.png.zOffset_m = 0.25;
 target.png.reflectivity = 1;
 target.png.downsampleFactor = 4;
 
-target.stl.fileName = 'maleTorso.stl';
-target.stl.zCrop_m = 0.3;
+target.stl.fileName = 'ar15.stl';
+target.stl.zCrop_m = 0.25;
 target.stl.xOffset_m = 0;
 target.stl.yOffset_m = 0;
 target.stl.zOffset_m = 0.25;

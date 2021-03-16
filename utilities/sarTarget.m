@@ -466,7 +466,6 @@ classdef sarTarget < handle
             closeFigures(obj);
             set(0,'DefaultFigureWindowStyle','docked')
             
-            % AntAxes
             obj.fig.f = figure;
             obj.fig.h = handle(axes);
         end
@@ -569,7 +568,7 @@ classdef sarTarget < handle
         function saveTarget(obj,saveName)
             % Save the sarTarget object to a file
             
-            if exist(saveName,'file')
+            if exist(saveName + ".mat",'file')
                 str = input('Are you sure you want to overwrite? Y/N: ','s');
                 if str ~= 'Y'
                     warning("Target not saved!");
@@ -578,7 +577,7 @@ classdef sarTarget < handle
             end
             
             savedtarget = obj;
-            savedtarget.fig = [];
+            savedtarget.fig.f = [];
             savedtarget.ant = [];
             savedtarget.sar = [];
             save(saveName,"savedtarget");
@@ -597,8 +596,12 @@ classdef sarTarget < handle
             
             fieldlist = string(fieldnames(savedtarget));
             for indField = 1:length(fieldlist)
-                obj.(fieldlist(indField)) = savedtarget.(fieldlist(indField));
+                if fieldlist(indField) ~= "fmcw" && fieldlist(indField) ~= "ant" && fieldlist(indField) ~= "sar" && fieldlist(indField) ~= "fig"
+                    obj.(fieldlist(indField)) = savedtarget.(fieldlist(indField));
+                end
             end
+            
+            
         end
         
         function verifyGPU(obj)

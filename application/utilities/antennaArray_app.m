@@ -110,6 +110,7 @@ classdef antennaArray_app < handle
             % Initializes the figures
             
             closeFigures(obj)
+            set(0,'DefaultFigureWindowStyle','docked')
             
             try
                 obj.fig.f = app.sar.fig.f;
@@ -189,6 +190,7 @@ classdef antennaArray_app < handle
             obj.TxTable.Data = app.TxTable.Data;
             obj.RxTable.Data = app.RxTable.Data;
             savedant = obj;
+            savedant.fig.f = [];
             save(savePathFull,"savedant");
         end
         

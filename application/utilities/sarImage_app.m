@@ -171,6 +171,7 @@ classdef sarImage_app < handle
             % Initialize the figures
             
             closeFigures(obj);
+            set(0,'DefaultFigureWindowStyle','docked')
             
             obj.fig.f = figure;
             obj.fig.h = handle(axes);

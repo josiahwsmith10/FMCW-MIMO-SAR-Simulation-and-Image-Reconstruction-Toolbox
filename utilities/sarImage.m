@@ -169,7 +169,7 @@ classdef sarImage < handle
         end
         
         function initializeFigures(obj)
-            % Initialize the figures
+            % Initializes the figures
             
             closeFigures(obj);
             set(0,'DefaultFigureWindowStyle','docked')

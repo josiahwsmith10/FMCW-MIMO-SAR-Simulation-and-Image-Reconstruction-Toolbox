@@ -278,6 +278,7 @@ classdef sarScenario_app < handle
             % Initilizes the figures
             
             closeFigures(obj)
+            set(0,'DefaultFigureWindowStyle','docked')
             
             try
                 obj.fig.f = app.ant.fig.f;

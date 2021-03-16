@@ -26,26 +26,25 @@ doc sarTarget
 % When the parameters of an fmcwChirpParameters object are changed by the
 % user, the object automatically updates itself, namely the property 'k'
 % and other dependencies of the changed parameters.
-fmcw.f0 = 77*1e9;
-fmcw.K = 100.036*1e12;
+fmcw.f0 = 300*1e9;
+fmcw.K = 200*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
-fmcw.fC = 79*1e9;
+fmcw.ADCSamples = 50;
+fmcw.fS = 1000*1e3;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fC = 305*1e9;
 
 %% Set Antenna Array Properties
 % When the parameters of an antennaArray object are changed by the user, 
 % the object automatically updates itself
 ant.isEPC = false;
 ant.z0_m = 0;
-% Antenna array from xWR1x43
+% Small MIMO Array
 ant.tableTx = [
-    0   0   1.5 5   1
-    0.5 0   2.5 5   0
-    0   0   3.5 5   1];
+    0   0   2   0   1
+    0   0   4   0   1];
 ant.tableRx = [
     0   0   0   0   1
     0   0   0.5 0   1
@@ -73,7 +72,7 @@ sar.displaySarScenario();
 target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0.25    1];
+    0   0   0.1 1];
 
 target.png.fileName = 'circle.png';
 target.png.xStep_m = 1e-3;
@@ -84,7 +83,7 @@ target.png.zOffset_m = 0.25;
 target.png.reflectivity = 1;
 target.png.downsampleFactor = 4;
 
-target.stl.fileName = 'maleTorso.stl';
+target.stl.fileName = 'ar15.stl';
 target.stl.zCrop_m = 0.25;
 target.stl.xOffset_m = 0;
 target.stl.yOffset_m = 0;
@@ -103,9 +102,9 @@ target.rp.ampMin = 0.5;
 target.rp.ampMax = 1;
 
 % Which to use
-target.isTable = false;
+target.isTable = true;
 target.isPNG = false;
-target.isSTL = true;
+target.isSTL = false;
 target.isRandomPoints = false;
 
 % Display the target

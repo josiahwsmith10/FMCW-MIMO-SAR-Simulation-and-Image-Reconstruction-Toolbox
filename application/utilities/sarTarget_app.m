@@ -340,7 +340,7 @@ classdef sarTarget_app < handle
                 'Message',"Estimated Time Remaining: 0:0:0","Cancelable","on");
             
             obj.sarData = single(zeros(size(app.sar.tx.xyz_m,1),app.fmcw.ADCSamples));
-                                 
+            
             try
                 if obj.isLong
                     error("oops");
@@ -513,6 +513,7 @@ classdef sarTarget_app < handle
             % Initialize the figures
             
             closeFigures(obj);
+            set(0,'DefaultFigureWindowStyle','docked')
             
             % AntAxes
             obj.fig.f = figure;
@@ -614,7 +615,7 @@ classdef sarTarget_app < handle
             end
             
             savedtarget = obj;
-            savedtarget.fig = 0;
+            savedtarget.fig.f = [];
             save(savePathFull,"savedtarget");
         end
         

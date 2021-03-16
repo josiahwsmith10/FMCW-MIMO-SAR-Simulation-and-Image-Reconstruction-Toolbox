@@ -1,13 +1,13 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="393218684" file="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2275969459" file="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj" location="C:\Users\josiah\OneDrive\Josiah Academics\PhD\Repositories\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" name="FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox</param.appname>
-    <param.authnamewatermark />
-    <param.email />
+    <param.authnamewatermark>Josiah W. Smith</param.authnamewatermark>
+    <param.email>josiah.smith@utdallas.edu</param.email>
     <param.company>The University of Texas at Dallas</param.company>
     <param.summary>A toolbox for near-field FMCW MIMO-SAR simulation and image reconstruction.</param.summary>
     <param.description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</param.description>
     <param.screenshot />
-    <param.version>0.1</param.version>
+    <param.version>1.0</param.version>
     <param.output>${PROJECT_ROOT}\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx</param.output>
     <param.products.name>
       <item>MATLAB</item>
@@ -368,9 +368,8 @@ examples/sar1DMIMOAWR1243_64_rand8192.mat
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
-      <param.authnamewatermark />
-      <param.email />
       <param.screenshot />
+      <param.version />
       <param.output />
       <param.platforms />
       <param.exclude.pcodedmfiles />
@@ -398,6 +397,7 @@ examples/sar1DMIMOAWR1243_64_rand8192.mat
       <file>${PROJECT_ROOT}\docs</file>
       <file>${PROJECT_ROOT}\examples</file>
       <file>${PROJECT_ROOT}\LICENSE</file>
+      <file>${PROJECT_ROOT}\sarSimulator.m</file>
       <file>${PROJECT_ROOT}\utilities</file>
     </fileset.rootfiles>
     <fileset.depfun.included />

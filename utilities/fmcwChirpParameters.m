@@ -15,15 +15,15 @@
 
 classdef fmcwChirpParameters < handle
     properties (SetObservable)
-        f0 = 77e9                   % Starting frequency in Hz
-        K = 100.036e12              % Chirp slope in Hz/s
+        f0 = 300e9                  % Starting frequency in Hz
+        K = 200e12                  % Chirp slope in Hz/s
         IdleTime_s = 0              % Duration of time before starting the chirp/ramp after the previous chirp
         TXStartTime_s = 0           % Duration of time before chirp/ramp starts wherein transmitter is ON
         ADCStartTime_s = 0          % Duration of time after transmitter is ON and TXStartTime_s has passed wherein chirp/ramp is active, but samples are not being collected (acts as a guard against initial chirp non-linearities)
-        RampEndTime_s = 39.98e-6    % Duration of time after transmitter is ON and TXStartTime_s has passed wherein chirp/ramp is active
-        ADCSamples = 79             % Number of ADC samples
-        fS = 2000e3                 % Sampling frequency in Hz
-        fC = 79e9                   % Center frequency in Hz
+        RampEndTime_s = 50.2e-6     % Duration of time after transmitter is ON and TXStartTime_s has passed wherein chirp/ramp is active
+        ADCSamples = 50             % Number of ADC samples
+        fS = 1000e3                 % Sampling frequency in Hz
+        fC = 305e9                  % Center frequency in Hz
     end
     
     properties
@@ -41,8 +41,9 @@ classdef fmcwChirpParameters < handle
     methods
         function obj = fmcwChirpParameters()
             % Attaches the listener to the fmcwChirpParameters object
-            
             attachListener(obj);
+            
+            obj.c = physconst('lightspeed');
         end
         
         function getChirpParameters(obj,savedfmcw)
@@ -65,8 +66,6 @@ classdef fmcwChirpParameters < handle
             
             obj.ADCSampleTime_time = obj.RampEndTime_s - obj.ADCStartTime_s;
             obj.ADCSampleTime_sample = obj.ADCSamples/obj.fS;
-            
-            obj.c = physconst('lightspeed');
             
             if obj.ADCSampleTime_sample > obj.ADCSampleTime_time
                 warning("Not enough time to collect " + obj.ADCSamples + " samples at " + obj.fS*1e-3 + " ksps");

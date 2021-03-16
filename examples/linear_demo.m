@@ -24,26 +24,25 @@ im = sarImage(fmcw,ant,sar,target);
 % When the parameters of an fmcwChirpParameters object are changed by the
 % user, the object automatically updates itself, namely the property 'k'
 % and other dependencies of the changed parameters.
-fmcw.f0 = 77*1e9;
-fmcw.K = 100.036*1e12;
+fmcw.ADCSamples = 50;
+fmcw.f0 = 300*1e9;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fS = 1000*1e3;
+fmcw.K = 200*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
-fmcw.fC = 79*1e9;
+fmcw.fC = 305*1e9;
 
 %% Set Antenna Array Properties
 % When the parameters of an antennaArray object are changed by the user, 
 % the object automatically updates itself
 ant.isEPC = false;
 ant.z0_m = 0;
-% Antenna array from xWR1x43
+% Small MIMO Array
 ant.tableTx = [
-    0   0   1.5 5   1
-    0.5 0   2.5 5   0
-    0   0   3.5 5   1];
+    0   0   2   0   1
+    0   0   4   0   1];
 ant.tableRx = [
     0   0   0   0   1
     0   0   0.5 0   1
@@ -69,16 +68,16 @@ sar.displaySarScenario();
 target.isAmplitudeFactor = false;
 
 target.tableTarget = [
-    0   0   0.25    1
-    0   0.1 0.25    1];
+    0   0       0.1    1
+    0   0.01    0.1    1];
 
 target.rp.numTargets = 16;
 target.rp.xMin_m = 0;
 target.rp.xMax_m = 0;
-target.rp.yMin_m = -0.1;
-target.rp.yMax_m = 0.1;
-target.rp.zMin_m = 0.25;
-target.rp.zMax_m = 0.35;
+target.rp.yMin_m = -0.05;
+target.rp.yMax_m = 0.05;
+target.rp.zMin_m = 0.05;
+target.rp.zMax_m = 0.2;
 target.rp.ampMin = 0.5;
 target.rp.ampMax = 1;
 
@@ -99,11 +98,11 @@ target.computeTarget();
 im.nFFTy = 512;
 im.nFFTz = 512;
 
-im.yMin_m = -0.2;
-im.yMax_m = 0.2;
+im.yMin_m = -0.05;
+im.yMax_m = 0.05;
 
 im.zMin_m = 0;
-im.zMax_m = 0.5;
+im.zMax_m = 0.2;
 
 im.numY = 128;
 im.numZ = 128;
@@ -113,7 +112,7 @@ im.isGPU = false;
 im.method = "Uniform 1-D SAR 2-D RMA";
 
 im.isMult2Mono = true;
-im.zRef_m = 0.25;
+im.zRef_m = 0.1;
 
 %% Reconstruct the Image
 im.computeImage();

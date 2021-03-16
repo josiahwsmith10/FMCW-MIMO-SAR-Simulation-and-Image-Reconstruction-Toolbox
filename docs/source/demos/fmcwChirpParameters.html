@@ -6,8 +6,8 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>fmcwChirpParameters_demo</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-03"><meta name="DC.source" content="fmcwChirpParameters_demo.m"><style type="text/css">
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+      --><title>fmcwChirpParameters_demo</title><meta name="generator" content="MATLAB 9.10"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-16"><meta name="DC.source" content="fmcwChirpParameters_demo.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
 html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
@@ -67,28 +67,63 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Include Necessary Directories</a></li><li><a href="#2">Create the Objects</a></li><li><a href="#3">Set FMCW Parameters</a></li><li><a href="#4">Load in Saved FMCW Parameters</a></li><li><a href="#5">Save FMCW Parameters</a></li></ul></div><h2 id="1">Include Necessary Directories</h2><pre class="codeinput">addpath(genpath(<span class="string">"../"</span>));
-</pre><h2 id="2">Create the Objects</h2><pre class="codeinput">fmcw = fmcwChirpParameters();
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Include Necessary Directories</a></li><li><a href="#3">Create the Objects</a></li><li><a href="#4">Set FMCW Parameters</a></li><li><a href="#5">Load in Saved FMCW Parameters</a></li><li><a href="#6">Save New FMCW Parameters</a></li></ul></div><pre class="codeinput"><span class="comment">% fmcwChirpParameters_demo - A Short Demonstration of the fmcwChirpParameters class</span>
+<span class="comment">% Copyright (C) 2021 Josiah W. Smith</span>
+<span class="comment">%</span>
+<span class="comment">% This program is free software: you can redistribute it and/or modify</span>
+<span class="comment">% it under the terms of the GNU General Public License as published by</span>
+<span class="comment">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">% (at your option) any later version.</span>
+<span class="comment">%</span>
+<span class="comment">% This program is distributed in the hope that it will be useful,</span>
+<span class="comment">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="comment">% GNU General Public License for more details.</span>
+</pre><h2 id="2">Include Necessary Directories</h2><pre class="codeinput">addpath(genpath(<span class="string">"../"</span>))
+</pre><h2 id="3">Create the Objects</h2><pre class="codeinput">fmcw = fmcwChirpParameters();
 
 doc <span class="string">fmcwChirpParameters</span>
-</pre><h2 id="3">Set FMCW Parameters</h2><p>When the parameters of an fmcwChirpParameters object are changed by the user, the object automatically updates itself, namely the property 'k' and other dependencies of the changed parameters.</p><pre class="codeinput">fmcw.f0 = 77*1e9;
+</pre><h2 id="4">Set FMCW Parameters</h2><p>When the parameters of an fmcwChirpParameters object are changed by the user, the object automatically updates itself, namely the property 'k' and other dependencies of the changed parameters.</p><pre class="codeinput">fmcw.ADCSamples = 50;
+fmcw.f0 = 300*1e9;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fS = 1000*1e3;
+fmcw.K = 200*1e12;
+fmcw.IdleTime_s = 0*1e-6;
+fmcw.TXStartTime_s = 0*1e-6;
+fmcw.ADCStartTime_s = 0*1e-6;
+fmcw.fC = 305*1e9;
+</pre><h2 id="5">Load in Saved FMCW Parameters</h2><pre class="codeinput">fmcw.loadChirpParameters(<span class="string">"fmcw_THz"</span>);
+</pre><h2 id="6">Save New FMCW Parameters</h2><pre class="codeinput">fmcw.ADCSamples = 79;
+fmcw.f0 = 77*1e9;
+fmcw.RampEndTime_s = 39.98*1e-6;
+fmcw.fS = 2000*1e3;
 fmcw.K = 100.036*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
 fmcw.fC = 79*1e9;
-</pre><h2 id="4">Load in Saved FMCW Parameters</h2><pre class="codeinput">fmcw.loadChirpParameters(<span class="string">"fmcw_v1"</span>);
-</pre><h2 id="5">Save FMCW Parameters</h2><pre class="codeinput">fmcw.f0 = 60*1e9;
-fmcw.fC = 64*1e9;
-fmcw.saveChirpParameters(<span class="string">"fmcw_v2"</span>);
-</pre><pre class="codeoutput">FMCW chirp parameters saved to: fmcw_v2
-</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+fmcw.saveChirpParameters(<span class="string">"fmcw_77GHz"</span>);
+</pre><pre class="codeoutput">Warning: Not enough time to collect 79 samples at 1000 ksps 
+Warning: Not enough time to collect 79 samples at 1000 ksps 
+Warning: Not enough time to collect 79 samples at 1000 ksps 
+FMCW chirp parameters saved to: fmcw_77GHz
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
+% fmcwChirpParameters_demo - A Short Demonstration of the fmcwChirpParameters class
+% Copyright (C) 2021 Josiah W. Smith
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
 %% Include Necessary Directories
-addpath(genpath("../"));
+addpath(genpath("../"))
 
 %% Create the Objects
 fmcw = fmcwChirpParameters();
@@ -99,22 +134,29 @@ doc fmcwChirpParameters
 % When the parameters of an fmcwChirpParameters object are changed by the
 % user, the object automatically updates itself, namely the property 'k'
 % and other dependencies of the changed parameters.
+fmcw.ADCSamples = 50;
+fmcw.f0 = 300*1e9;
+fmcw.RampEndTime_s = 50.1*1e-6;
+fmcw.fS = 1000*1e3;
+fmcw.K = 200*1e12;
+fmcw.IdleTime_s = 0*1e-6;
+fmcw.TXStartTime_s = 0*1e-6;
+fmcw.ADCStartTime_s = 0*1e-6;
+fmcw.fC = 305*1e9;
+
+%% Load in Saved FMCW Parameters
+fmcw.loadChirpParameters("fmcw_THz");
+
+%% Save New FMCW Parameters
+fmcw.ADCSamples = 79;
 fmcw.f0 = 77*1e9;
+fmcw.RampEndTime_s = 39.98*1e-6;
+fmcw.fS = 2000*1e3;
 fmcw.K = 100.036*1e12;
 fmcw.IdleTime_s = 0*1e-6;
 fmcw.TXStartTime_s = 0*1e-6;
 fmcw.ADCStartTime_s = 0*1e-6;
-fmcw.ADCSamples = 79;
-fmcw.fS = 2000*1e3;
-fmcw.RampEndTime_s = 39.98*1e-6;
 fmcw.fC = 79*1e9;
-
-%% Load in Saved FMCW Parameters
-fmcw.loadChirpParameters("fmcw_v1");
-
-%% Save FMCW Parameters
-fmcw.f0 = 60*1e9;
-fmcw.fC = 64*1e9;
-fmcw.saveChirpParameters("fmcw_v2");
+fmcw.saveChirpParameters("fmcw_77GHz");
 ##### SOURCE END #####
 --></body></html>

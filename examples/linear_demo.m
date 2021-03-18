@@ -104,12 +104,12 @@ im.yMax_m = 0.05;
 im.zMin_m = 0;
 im.zMax_m = 0.2;
 
-im.numY = 128;
+im.numY = 512;
 im.numZ = 128;
 
 im.isGPU = false;
-% im.zSlice_m = 0.25; % Use if reconstructing a 1-D image
-im.method = "Uniform 1-D SAR 2-D RMA";
+im.zSlice_m = 0.1; % Use if reconstructing a 1-D image
+im.method = "Uniform 1-D SAR 1-D FFT";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.1;

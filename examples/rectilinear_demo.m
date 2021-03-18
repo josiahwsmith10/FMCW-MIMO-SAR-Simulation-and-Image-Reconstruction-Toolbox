@@ -91,10 +91,10 @@ target.stl.reflectivity = 1;
 target.stl.downsampleFactor = 40;
 
 target.rp.numTargets = 16;
-target.rp.xMin_m = -0.05;
-target.rp.xMax_m = 0.05;
-target.rp.yMin_m = -0.05;
-target.rp.yMax_m = 0.05;
+target.rp.xMin_m = -0.02;
+target.rp.xMax_m = 0.02;
+target.rp.yMin_m = -0.02;
+target.rp.yMax_m = 0.02;
 target.rp.zMin_m = 0.05;
 target.rp.zMax_m = 0.2;
 target.rp.ampMin = 0.5;
@@ -136,13 +136,11 @@ im.numZ = 128;
 im.isGPU = false;
 % im.zSlice_m = 0.25; % Use if reconstructing a 2-D image
 im.method = "Uniform 2-D SAR 3-D RMA";
-% im.method = "2-D SAR 3-D BPA";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.1;
 
 %% Reconstruct the Image
-im.isGPU = true;
 im.computeImage();
 im.displayImage();
 

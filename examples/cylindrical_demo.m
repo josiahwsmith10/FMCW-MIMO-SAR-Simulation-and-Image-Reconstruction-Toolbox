@@ -58,7 +58,7 @@ ant.displayAntennaArray();
 sar.scanMethod = 'Cylindrical';
 sar.numY = 25;
 sar.yStep_m = fmcw.lambda_m*2;
-sar.numTheta = 256;
+sar.numTheta = 1024;
 sar.thetaMax_deg = 360;
 
 % Display the SAR Scenario
@@ -116,7 +116,7 @@ target.computeTarget();
 %% Set Image Reconstruction Parameters and Create sarImage Object
 % When the parameters of a sarImage object are changed by the user, the
 % object automatically updates itself
-im.nFFTx = 1024;
+im.nFFTx = 4096;
 im.nFFTy = 512;
 im.nFFTz = 512;
 
@@ -134,19 +134,17 @@ im.numY = 128;
 im.numZ = 128;
 
 im.isGPU = false;
-im.thetaUpsampleFactor = 1;
+im.thetaUpsampleFactor = 4;
 im.method = "Uniform 2-D CSAR 3-D PFA";
-% im.method = "2-D CSAR 3-D BPA";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.1;
 
 %% Reconstruct the Image
-im.isGPU = true;
 im.computeImage();
 im.displayImage();
 
 %% Display the Image with Different Parameters
-im.dBMin = -5;
+im.dBMin = -25;
 im.fontSize = 12;
 im.displayImage();

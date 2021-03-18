@@ -139,7 +139,7 @@ classdef sarTarget < handle
             % png.fileNameLoaded
             
             try
-                obj.png.tMat = imread("./saved/pngstl/" + obj.png.fileName);
+                obj.png.tMat = imread(obj.png.fileName);
             catch
                 obj.png.isLoaded = false;
                 obj.isPNG = false;

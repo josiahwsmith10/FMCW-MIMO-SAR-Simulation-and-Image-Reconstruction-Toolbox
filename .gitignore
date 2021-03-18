@@ -6,3 +6,5 @@ FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx
 FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj
 *.prj
 FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.prj
+examples/cylindricalBPA.mat
+examples/rectilinearBPA.mat

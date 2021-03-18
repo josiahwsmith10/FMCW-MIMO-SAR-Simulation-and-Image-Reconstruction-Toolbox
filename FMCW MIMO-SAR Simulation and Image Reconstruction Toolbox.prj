@@ -6,7 +6,7 @@
     <param.company>The University of Texas at Dallas</param.company>
     <param.summary>A toolbox for near-field FMCW MIMO-SAR simulation and image reconstruction.</param.summary>
     <param.description>This toolbox enables rapid development of near-field MIMO-SAR imaging radar systems by providing easy access to efficient simulation tools and diverse toolset with documented API. Additionally, the toolbox provides efficient generation of large near-field FMCW MIMO-SAR imaging scenarios useful for many data-driven applications.</param.description>
-    <param.screenshot />
+    <param.screenshot>C:\Users\josiah\OneDrive\Josiah Academics\PhD\WISLAB\Logos\MATLAB\wislab Logo2.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.output>${PROJECT_ROOT}\FMCW MIMO-SAR Simulation and Image Reconstruction Toolbox.mltbx</param.output>
     <param.products.name>
@@ -368,7 +368,6 @@ examples/sar1DMIMOAWR1243_64_rand8192.mat
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
-      <param.screenshot />
       <param.version />
       <param.output />
       <param.platforms />

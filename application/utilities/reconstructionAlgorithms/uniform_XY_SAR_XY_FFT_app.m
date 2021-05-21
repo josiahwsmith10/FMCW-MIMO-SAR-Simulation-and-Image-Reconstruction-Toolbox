@@ -229,7 +229,7 @@ classdef uniform_XY_SAR_XY_FFT_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage2D(im,im.x_m,im.y_m,"x (m)","y (m)");
+            displayImage2D_app(im,im.x_m,im.y_m,"x (m)","y (m)");
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

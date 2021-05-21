@@ -116,7 +116,7 @@ classdef nonuniform_theta_CSAR_XZ_BPA_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage2D(im,im.x_m,im.z_m,"x (m)","z (m)");
+            displayImage2D_app(im,im.x_m,im.z_m,"x (m)","z (m)");
         end
     end
 end

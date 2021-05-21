@@ -251,7 +251,7 @@ classdef uniform_theta_CSAR_XZ_PFA_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage2D(im,im.x_m,im.z_m,"x (m)","z (m)");
+            displayImage2D_app(im,im.x_m,im.z_m,"x (m)","z (m)");
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

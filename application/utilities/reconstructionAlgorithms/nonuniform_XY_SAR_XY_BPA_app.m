@@ -112,7 +112,7 @@ classdef nonuniform_XY_SAR_XY_BPA_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage2D(im,im.x_m,im.y_m,"x (m)","y (m)");
+            displayImage2D_app(im,im.x_m,im.y_m,"x (m)","y (m)");
         end
     end
 end

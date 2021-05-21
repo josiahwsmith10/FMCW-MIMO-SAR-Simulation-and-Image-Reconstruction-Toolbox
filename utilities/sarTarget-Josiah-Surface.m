@@ -227,7 +227,7 @@ classdef sarTarget < handle
                     if obj.isAmplitudeFactor
                         amplitudeFactor = obj.amp./(obj.R.tx .* obj.R.rx);
                     else
-                        amplitudeFactor = obj.amp;
+                        amplitudeFactor = 1;
                     end
                     
                     obj.R.tx = 0;
@@ -247,7 +247,7 @@ classdef sarTarget < handle
                     if obj.isAmplitudeFactor
                         amplitudeFactor = obj.amp./(obj.R).^2;
                     else
-                        amplitudeFactor = obj.amp;
+                        amplitudeFactor = 1;
                     end
                     obj.isLong = false;
                 catch
@@ -287,7 +287,9 @@ classdef sarTarget < handle
                         tic
                     end
                     temp = exp(1j*obj.fmcw.k(indK)*R_T_plus_R_R);
-                    temp = amplitudeFactor .* temp;
+                    if obj.isAmplitudeFactor
+                        temp = amplitudeFactor .* temp;
+                    end
                     
                     obj.sarData(:,indK) = single(gather(sum(temp,2)));
                     if ~obj.isSilent
@@ -313,7 +315,9 @@ classdef sarTarget < handle
                             tic
                         end
                         temp = exp(1j*obj.fmcw.k.*R_T_plus_R_R(:,indTarget));
-                        temp = amplitudeFactor .* temp;
+                        if obj.isAmplitudeFactor
+                            temp = amplitudeFactor .* temp;
+                        end
                         
                         obj.sarData = obj.sarData + single(gather(temp));
                         % Update the progress dialog
@@ -378,7 +382,9 @@ classdef sarTarget < handle
                     tic
                 end
                 temp = reshape(temp3(IC,indK),sizeR);
-                temp = amplitudeFactor .* temp;
+                if obj.isAmplitudeFactor
+                    temp = amplitudeFactor .* temp;
+                end
                 
                 obj.sarData(:,indK) = single(gather(sum(temp,2)));
                 % Update the progress dialog
@@ -439,7 +445,9 @@ classdef sarTarget < handle
                         count = count + 1;
                     end
                     temp = exp(1j*obj.fmcw.k(indK)*R_T_plus_R_R);
-                    temp = amplitudeFactor .* temp;
+                    if obj.isAmplitudeFactor
+                        temp = amplitudeFactor .* temp;
+                    end
                     
                     obj.sarData(indSAR,indK) = single(gather(sum(temp,2)));
                     if ~obj.isSilent

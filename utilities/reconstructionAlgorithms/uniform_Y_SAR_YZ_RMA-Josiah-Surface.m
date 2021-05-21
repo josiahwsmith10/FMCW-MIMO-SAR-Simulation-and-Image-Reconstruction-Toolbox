@@ -1,7 +1,7 @@
-% uniform_XY_SAR_XYZ_RMA is a reconstructor class that performs 3-D
+% uniform_Y_SAR_YZ_RMA is a reconstructor class that performs a 2-D
 % Range Migration Algorithm image reconstruction. The synthetic
-% aperture must span the x-y plane at the z-coordinate z0_m and the
-% target can be a 1-D, 2-D, or 3-D target in x-y-z space
+% aperture must span the y-dimension and the target must be a 2-D
+% target in the y-z plane
 %
 % Copyright (C) 2021 Josiah W. Smith
 %
@@ -15,15 +15,13 @@
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 
-classdef uniform_XY_SAR_XYZ_RMA < handle
+classdef uniform_Y_SAR_YZ_RMA < handle
     properties
         sarData             % Computed beat signal
         
-        nFFTx = 512         % Number of FFT points along the x-dimension, when using FFT-based reconstruction algorithms
         nFFTy = 512         % Number of FFT points along the y-dimension, when using FFT-based reconstruction algorithms
         nFFTz = 512         % Number of FFT points along the z-dimension, when using FFT-based reconstruction algorithms
         
-        x_m                 % Reconstructed image x axis
         y_m                 % Reconstructed image y axis
         z_m                 % Reconstructed image z axis
         
@@ -37,7 +35,6 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
         zRef_m = 0.25       % z location of reference plane for multistatic-to-monostatic approximation
         k_vec               % Instantaneous wavenumber vector
         z0_m                % Location of the antenna array in the z-plane
-        xStep_m = 1e-3      % Step size along the x-dimension to move the antenna array in meters
         yStep_m = 8e-3      % Step size along the y-dimension to move the antenna array in meters
         
         fmcw                % fmcwChirpParameters object
@@ -48,7 +45,7 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
     end
     
     methods
-        function obj = uniform_XY_SAR_XYZ_RMA(im)
+        function obj = uniform_Y_SAR_YZ_RMA(im)
             % Set the properties corresponding to the object handles for
             % the imaging scenario and get the parameters from those object
             % handles
@@ -74,11 +71,9 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
         function getParameters(obj)
             % Get the parameters from the object handles
             
-            obj.nFFTx = obj.im.nFFTx;
             obj.nFFTy = obj.im.nFFTy;
             obj.nFFTz = obj.im.nFFTz;
             
-            obj.x_m = obj.im.x_m;
             obj.y_m = obj.im.y_m;
             obj.z_m = obj.im.z_m;
             
@@ -91,26 +86,17 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
             obj.zRef_m = obj.im.zRef_m;
             obj.k_vec = obj.fmcw.k;
             obj.z0_m = obj.ant.z0_m;
-            obj.xStep_m = obj.sar.xStep_m;
             obj.yStep_m = obj.sar.yStep_m;
         end
         
         function verifyParameters(obj)
             % Verify the parameters allow for imaging
             
-            obj.isFail = false;
-            
             kZU = single(reshape(linspace(0,2*max(obj.k_vec) - 2*max(obj.k_vec)/obj.nFFTz,obj.nFFTz),1,1,[]));
             dkZU = kZU(2) - kZU(1);
-            x_m_temp = make_x(obj,obj.sar.xStep_m,obj.nFFTx);
             y_m_temp = make_x(obj,obj.sar.yStep_m,obj.nFFTy);
             z_m_temp = single(2*pi / (dkZU * obj.nFFTz) * (1:obj.nFFTz));
             
-            if max(abs(obj.x_m)) > max(abs(x_m_temp))
-                warning("xMax_m is too large for nFFTx. Decrease xMax_m or increase nFFTx")
-                obj.isFail = true;
-                return;
-            end
             if max(abs(obj.y_m)) > max(abs(y_m_temp))
                 warning("yMax_m is too large for nFFTy. Decrease yMax_m or increase nFFTy")
                 obj.isFail = true;
@@ -126,8 +112,8 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
         function verifyReconstruction(obj)
             % Verify the reconstruction can continue
             
-            if obj.sar.scanMethod ~= "Rectilinear"
-                warning("Must use 2-D XY SAR scan to use 2-D SAR 3-D RMA image reconstruction method!");
+            if obj.sar.scanMethod ~= "Linear"
+                warning("Must use linear SAR scan along the Y-axis to perform Uniform 1-D SAR 2-D RMA image reconstruction method!");
                 obj.isFail = true;
                 return
             end
@@ -179,56 +165,48 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
                 reconstruct(obj);
                 imXYZ_out = obj.imXYZ;
             else
-                imXYZ_out = single(zeros(obj.im.numX,obj.im.numY,obj.im.numZ));
+                imXYZ_out = single(zeros(obj.im.numY,obj.im.numZ));
             end
         end
         
         function reconstruct(obj)
-            % Reconstruct the image using the 3-D Range Migration Algorithm
+            % Reconstruct the image using the 2-D Range Migration Algorithm
             
             % sarData is of size (sar.numY, sar.numX, fmcw.ADCSamples)
-            % Zero-Pad Data: s(y,x,k)
+            % Zero-Pad Data: s(y,k)
             sarDataPadded = obj.sarData;
             sarDataPadded = padarray(sarDataPadded,[floor((obj.nFFTy-size(obj.sarData,1))/2) 0],0,'pre');
-            sarDataPadded = padarray(sarDataPadded,[0 floor((obj.nFFTx-size(obj.sarData,2))/2)],0,'pre');
             clear sarData
             
             % Compute Wavenumbers
-            k = single(reshape(obj.k_vec,1,1,[]));
-            L_x = obj.nFFTx * obj.xStep_m;
-            dkX = 2*pi/L_x;
-            kX = make_kX(obj,dkX,obj.nFFTx);
-            
+            k = single(reshape(obj.k_vec,1,[]));
             L_y = obj.nFFTy * obj.yStep_m;
             dkY = 2*pi/L_y;
             kY = make_kX(obj,dkY,obj.nFFTy)';
             
-            kZU = single(reshape(linspace(0,2*max(k) - 2*max(k)/obj.nFFTz,obj.nFFTz),1,1,[]));
+            kZU = single(reshape(linspace(0,2*max(k) - 2*max(k)/obj.nFFTz,obj.nFFTz),1,[]));
             dkZU = kZU(2) - kZU(1);
             
             if obj.isGPU
-                reset(gpuDevice)
                 k = gpuArray(k);
-                kX = gpuArray(kX);
                 kY = gpuArray(kY);
                 kZU = gpuArray(kZU);
                 sarDataPadded = gpuArray(sarDataPadded);
             end
             
-            kYU = repmat(kY,[1,obj.nFFTx,obj.nFFTz]);
-            kXU = repmat(kX,[obj.nFFTy,1,obj.nFFTz]);
-            kU = single(1/2 * sqrt(kX.^2 + kY.^2 + kZU.^2));
-            kZ = single(sqrt((4 * k.^2 - kX.^2 - kY.^2) .* (4 * k.^2 > kX.^2 + kY.^2)));
+            kYU = repmat(kY,[1,obj.nFFTz]);
+            kU = single(1/2 * sqrt(kY.^2 + kZU.^2));
+            kZ = single(sqrt((4 * k.^2 - kY.^2) .* (4 * k.^2 > kY.^2)));
             
             % Compute Focusing Filter
             focusingFilter = exp(-1j * kZ * obj.z0_m);
             if obj.isAmplitudeFactor
                 focusingFilter = kZ .* focusingFilter;
             end
-            focusingFilter(4 * k.^2 < kX.^2 + kY.^2) = 0;
+            focusingFilter(4 * k.^2 < kY.^2) = 0;
             
-            % Compute FFT across Y & X Dimensions: S(kY,kX,k)
-            sarDataFFT = fftshift(fftshift(fft(fft(conj(sarDataPadded),obj.nFFTy,1),obj.nFFTx,2),1),2)/obj.nFFTx/obj.nFFTy;
+            % Compute FFT across Y Dimension: S(kY,k)
+            sarDataFFT = fftshift(fft(conj(sarDataPadded),obj.nFFTy,1),1)/obj.nFFTy;
             clear sarDataPadded sarData
             
             if obj.isGPU
@@ -237,48 +215,37 @@ classdef uniform_XY_SAR_XYZ_RMA < handle
             
             % Stolt Interpolation
             try
-                sarImageFFT = interpn(kY(:),kX(:),k(:), sarDataFFT .* focusingFilter ,kYU,kXU,kU,'linear',0);
+                sarImageFFT = interpn(kY(:),k(:), sarDataFFT .* focusingFilter ,kYU,kU,'linear',0);
             catch
                 sarImageFFT = zeros(size(kU));
                 for indkY = 1:size(kU,1)
-                    for indkX = 1:size(kU,2)
-                        tempS = squeeze(sarDataFFT(indkY,indkX,:) .* focusingFilter(indkY,indkX,:));
-                        kZTemp = squeeze(kZ(indkY,indkX,:));
-                        [kZTemp_unique,~,ind_c] = uniquetol(kZTemp);
-                        tempS = accumarray(ind_c,tempS);
-                        if length(kZTemp_unique) > 2
-                            sarImageFFT(indkY,indkX,:) = gather(interp1(kZTemp_unique,tempS,kZU,'nearest',0));
-                        end
+                    tempS = squeeze(sarDataFFT(indkY,:) .* focusingFilter(indkY,:));
+                    kZTemp = squeeze(kZ(indkY,:));
+                    [kZTemp_unique,~,ind_c] = uniquetol(kZTemp);
+                    tempS = accumarray(ind_c,tempS);
+                    if length(kZTemp_unique) > 2
+                        sarImageFFT(indkY,:) = gather(interp1(kZTemp_unique,tempS,kZU,'nearest',0));
                     end
                 end
             end
-            clear sarDataFFT focusingFilter kY kX k kYU kXU kU kZ kZU
+            clear sarDataFFT focusingFilter kY k kYU kU kZ kZU
             
-            if obj.isGPU
-                sarImageFFT = gather(sarImageFFT);
-                reset(gpuDevice);
-                sarImageFFT = gpuArray(sarImageFFT);
-            end
-            
-            % Recover Image by IFT: p(y,x,z)
+            % Recover Image by IFT: p(y,z)
             sarImage = single(ifftn(sarImageFFT));
             clear sarImageFFT focusingFilter
             
-            % Reorient Image: p(x,y,z)
-            sarImage = permute(sarImage,[2,1,3]);
-            
             % Declare Spatial Vectors
-            x_m_temp = make_x(obj,obj.xStep_m,obj.nFFTx);
             y_m_temp = make_x(obj,obj.yStep_m,obj.nFFTy);
             z_m_temp = single(2*pi / (dkZU * obj.nFFTz) * (1:obj.nFFTz));
             
-            [X,Y,Z] = ndgrid(obj.x_m(:),obj.y_m(:),obj.z_m(:));
-            obj.imXYZ = single(gather(interpn(x_m_temp(:),y_m_temp(:),z_m_temp(:),sarImage,X,Y,Z,"nearest",0)));
+            [Y,Z] = ndgrid(obj.y_m(:),obj.z_m(:));
+            obj.imXYZ = single(gather(interpn(y_m_temp(:),z_m_temp(:),sarImage,Y,Z,"nearest",0)));
         end
         
         function displayImage(obj)
-            % Display the reconstructed x-y-z image
-            displayImage3D_app(obj.im);
+            % Display the reconstructed y-z image
+            
+            displayImage2D(obj.im,obj.im.y_m,obj.im.z_m,"y (m)","z (m)");
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

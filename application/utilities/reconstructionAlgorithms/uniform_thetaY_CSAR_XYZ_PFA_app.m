@@ -353,7 +353,7 @@ classdef uniform_thetaY_CSAR_XYZ_PFA_app < handle
         end
         
         function obj = displayImage(obj,im)
-            displayImage3D(im);
+            displayImage3D_app(im);
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

@@ -240,7 +240,7 @@ classdef uniform_Y_SAR_YZ_RMA_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage2D(im,im.y_m,im.z_m,"y (m)","z (m)");
+            displayImage2D_app(im,im.y_m,im.z_m,"y (m)","z (m)");
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

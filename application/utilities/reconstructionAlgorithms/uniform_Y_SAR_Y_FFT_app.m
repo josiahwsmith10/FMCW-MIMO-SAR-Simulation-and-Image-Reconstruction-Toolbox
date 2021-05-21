@@ -203,7 +203,7 @@ classdef uniform_Y_SAR_Y_FFT_app < handle
         end
         
         function displayImage(obj,im)
-            displayImage1D(im,im.y_m,'y (m)');
+            displayImage1D_app(im,im.y_m,'y (m)');
         end
         
         function x = make_x(obj,xStep_m,nFFTx)

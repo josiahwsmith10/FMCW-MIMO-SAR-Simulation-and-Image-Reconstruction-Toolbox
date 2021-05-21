@@ -206,15 +206,15 @@ classdef uniform_XY_SAR_XY_FFT < handle
                 sarDataPadded = gpuArray(sarDataPadded);
             end
             
+            % Compute FFT across Y & X Dimensions: S(kY,kX,k)
+            sarDataFFT = fftshift(fftshift(fft(fft(sarDataPadded,obj.nFFTy,1),obj.nFFTx,2),1),2)/obj.nFFTx/obj.nFFTy;
+            clear sarDataPadded
+            
             kZ = single(sqrt((4 * k.^2 - kX.^2 - kY.^2) .* (4 * k.^2 > kX.^2 + kY.^2)));
             
             % Compute Focusing Filter
             focusingFilter = exp(-1j * kZ * (obj.zSlice_m - obj.z0_m));
             focusingFilter(4 * k.^2 < kX.^2 + kY.^2) = 0;
-            
-            % Compute FFT across Y & X Dimensions: S(kY,kX,k)
-            sarDataFFT = fftshift(fftshift(fft(fft(sarDataPadded,obj.nFFTy,1),obj.nFFTx,2),1),2)/obj.nFFTx/obj.nFFTy;
-            clear sarDataPadded sarData
             
             if obj.isGPU
                 focusingFilter = gpuArray(focusingFilter);

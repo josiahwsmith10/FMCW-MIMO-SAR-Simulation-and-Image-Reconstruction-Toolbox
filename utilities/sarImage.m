@@ -97,7 +97,7 @@ classdef sarImage < handle
                 return
             end
             
-            update(obj);
+            %update(obj);
             
             if obj.method ~= "-" && ~obj.reconstructor.isFail
                 
@@ -153,10 +153,14 @@ classdef sarImage < handle
                     obj.reconstructor = uniform_theta_CSAR_XZ_PFA(obj);
                     
                 case "1-D CSAR 2-D BPA"
-                    obj.reconstructor = nonuniform_theta_CSAR_XZ_BPA(obj);
-                    
+                    obj.reconstructor = nonuniform_theta_CSAR_XZ_BPA(obj);                    
                 case "custom"
-                    obj.reconstructor = reconstructionAlgorithmTemplate(obj);
+%                     obj.reconstructor = reconstructionAlgorithmTemplate(obj);
+                    obj.reconstructor = freehand_linear_RMA_jws(obj);
+                case "-"
+                    
+                otherwise
+                    error("Incorrect reconstruction algorithm method! See documentation for list of allowed reconstruction algorithms or call ""custom"" to use your custom algorithm");
             end
         end
         

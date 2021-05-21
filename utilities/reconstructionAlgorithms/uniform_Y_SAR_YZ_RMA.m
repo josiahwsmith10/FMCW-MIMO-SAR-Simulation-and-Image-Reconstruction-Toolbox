@@ -126,7 +126,7 @@ classdef uniform_Y_SAR_YZ_RMA < handle
             end
             
             % Ensure virtual array is uniform
-            if mean(diff(obj.ant.vx.xyz_m(:,2),2)) > eps
+            if mean(diff(obj.ant.vx.xyz_m(:,2),2)) > 8*eps
                 warning("Virtual antenna array is nonuniform! Change antenna positions.");
                 obj.isFail = true;
                 return

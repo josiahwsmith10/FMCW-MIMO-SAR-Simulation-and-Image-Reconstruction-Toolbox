@@ -115,7 +115,7 @@ classdef nonuniform_XY_SAR_XYZ_BPA_app < handle
         end
         
         function obj = displayImage(obj,im)
-            displayImage3D(im);
+            displayImage3D_app(im);
         end
     end
 end

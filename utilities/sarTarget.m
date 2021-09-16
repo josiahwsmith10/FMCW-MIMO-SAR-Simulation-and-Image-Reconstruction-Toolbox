@@ -325,9 +325,9 @@ classdef sarTarget < handle
                 catch
                     try
                         R_T_plus_R_R = gather(R_T_plus_R_R);
-                        computeTargetLarge(obj,R_T_plus_R_R,d);
+                        computeTargetLarge(obj,R_T_plus_R_R);
                     catch
-                        computeTargetSlow(obj,d);
+                        computeTargetSlow(obj);
                     end
                 end
             end

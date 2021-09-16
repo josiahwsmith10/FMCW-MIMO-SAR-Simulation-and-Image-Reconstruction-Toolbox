@@ -109,7 +109,7 @@ im.numZ = 128;
 
 im.isGPU = false;
 im.zSlice_m = 0.1; % Use if reconstructing a 1-D image
-im.method = "Uniform 1-D SAR 1-D FFT";
+im.method = "Uniform 1-D SAR 2-D RMA";
 
 im.isMult2Mono = true;
 im.zRef_m = 0.1;

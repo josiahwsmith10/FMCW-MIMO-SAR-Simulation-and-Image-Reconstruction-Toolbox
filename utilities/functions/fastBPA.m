@@ -39,7 +39,9 @@ for indK = 1:length(k)
     if obj.isAmplitudeFactor
         bpaKernel = bpaKernel .* amplitudeFactor;
     end
-    obj.imXYZ = obj.imXYZ + sum(obj.sarData(:,:,indK) .* bpaKernel,1);
+    temp = obj.sarData(:,:,indK) .* bpaKernel;
+    temp(isnan(temp)) = 0;
+    obj.imXYZ = obj.imXYZ + sum(temp,1);
     % Update the progress dialog
     tocs(indK) = toc;
     disp("Iteration " + indK + "/" + length(k) + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indK,length(k)));

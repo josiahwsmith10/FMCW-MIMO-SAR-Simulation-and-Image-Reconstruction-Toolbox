@@ -56,7 +56,9 @@ for indSAR = 1:numSAR
     if obj.isAmplitudeFactor
         bpaKernel = bpaKernel .* amplitudeFactor(indSAR);
     end
-    obj.imXYZ = obj.imXYZ + sum(obj.sarData(indSAR,:,:) .* bpaKernel,3);
+    temp = obj.sarData(indSAR,:,:) .* bpaKernel;
+    temp(isnan(temp)) = 0;
+    obj.imXYZ = obj.imXYZ + sum(temp,3);
     % Update the progress dialog
     tocs(indSAR) = toc;
     disp("Iteration " + indSAR + "/" + numSAR + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indSAR,numSAR));
@@ -93,7 +95,9 @@ for indTarget = 1:numTargetVoxels
     if obj.isAmplitudeFactor
         bpaKernel = bpaKernel .* amplitudeFactor;
     end
-    obj.imXYZ(indTarget) = sum(obj.sarData .* bpaKernel,'all');
+    temp = obj.sarData .* bpaKernel;
+    temp(isnan(temp)) = 0;
+    obj.imXYZ(indTarget) = sum(temp,'all');
     % Update the progress dialog
     tocs(indTarget) = toc;
     disp("Iteration " + indTarget + "/" + numTargetVoxels + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indTarget,numTargetVoxels));
@@ -128,7 +132,9 @@ for indTarget = 1:size(obj.target_xyz_m,1)
         if obj.isAmplitudeFactor
             bpaKernel = bpaKernel .* amplitudeFactor;
         end
-        obj.imXYZ(indTarget) = obj.imXYZ(indTarget) + sum(obj.sarData(:,:,indK) .* bpaKernel,1);
+        temp = obj.sarData(:,:,indK) .* bpaKernel;
+        temp(isnan(temp)) = 0;
+        obj.imXYZ(indTarget) = obj.imXYZ(indTarget) + sum(temp,1);
         % Update the progress dialog
         tocs(mod(count,length(tocs))+1) = toc;
         disp("Iteration " + count + "/" + length(k)*size(obj.target_xyz_m,1) + ". Estimated Time Remaining: " + getEstTime(obj,tocs,indK,length(k)*size(obj.target_xyz_m,1)));

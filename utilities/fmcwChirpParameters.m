@@ -80,7 +80,7 @@ classdef fmcwChirpParameters < handle
             f = f0_temp + (0:obj.ADCSamples-1)*obj.K/obj.fS;    % wideband frequency
             
             obj.k = 2*pi*f/obj.c;
-            obj.lambda_m = obj.c/(obj.fC);
+            obj.lambda_m = obj.c/obj.fC;
         end
         
         function loadChirpParameters(obj,loadName)

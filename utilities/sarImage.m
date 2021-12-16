@@ -143,6 +143,9 @@ classdef sarImage < handle
                 case "2-D SAR 2-D BPA"
                     obj.reconstructor = nonuniform_XY_SAR_XY_BPA(obj);
                     
+                case "1-D SAR 2-D BPA"
+                    obj.reconstructor = nonuniform_Y_SAR_YZ_BPA(obj);
+                    
                 case "Uniform 2-D CSAR 3-D PFA"
                     obj.reconstructor = uniform_thetaY_CSAR_XYZ_PFA(obj);
                     
@@ -153,10 +156,23 @@ classdef sarImage < handle
                     obj.reconstructor = uniform_theta_CSAR_XZ_PFA(obj);
                     
                 case "1-D CSAR 2-D BPA"
-                    obj.reconstructor = nonuniform_theta_CSAR_XZ_BPA(obj);                    
+                    obj.reconstructor = nonuniform_theta_CSAR_XZ_BPA(obj);
+                    
                 case "custom"
-%                     obj.reconstructor = reconstructionAlgorithmTemplate(obj);
+                    obj.reconstructor = reconstructionAlgorithmTemplate(obj);
+                    
+                case "freehand_linear_jws"
                     obj.reconstructor = freehand_linear_RMA_jws(obj);
+                    
+                case "freehand_linear_fast"
+                    obj.reconstructor = freehand_linear_RMA_fast(obj);
+                    
+                case "freehand_rectilinear_fast_3D"
+                    obj.reconstructor = freehand_rectilinear_RMA_fast_3D(obj);
+                    
+                case "freehand_rectilinear_fast_2D"
+                    obj.reconstructor = freehand_rectilinear_RMA_fast_2D(obj);
+                    
                 case "-"
                     
                 otherwise

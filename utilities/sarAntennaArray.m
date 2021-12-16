@@ -29,10 +29,10 @@ classdef sarAntennaArray < handle
         
         % tableTx - Array of transmitter antenna locations and states in the
         % following form:
-        %   x (m)   |   x (lambda)  |   y (m)   |   y (lambda)  |   state
-        %   A       |   B           |   C       |   D           |   1
+        %   x (lambda) |   x (mm)  |   y (lambda) |   y (mm)  |   state
+        %   A          |   B       |   C          |   D       |   1
         % Where A, B, C, and D are doubles and the x-location of the
-        % transmit element is computed by x = A + B*lambda, using lambda as
+        % transmit element is computed by x = A*lambda + B, using lambda as
         % the lambda_m property of the fmcwChirpParameters object fmcw
         tableTx = [
             0   0   1.5 5   1
@@ -41,10 +41,10 @@ classdef sarAntennaArray < handle
         
         % tableRx - Array of receiver antenna locations and states in the
         % following form:
-        %   x (m)   |   x (lambda)  |   y (m)   |   y (lambda)  |   state
-        %   A       |   B           |   C       |   D           |   1
+        %   x (lambda) |   x (mm)  |   y (lambda) |   y (mm)  |   state
+        %   A          |   B       |   C          |   D       |   1
         % Where A, B, C, and D are doubles and the x-location of the
-        % receive element is computed by x = A + B*lambda, using lambda as
+        % receive element is computed by x = A*lambda + B, using lambda as
         % the lambda_m property of the fmcwChirpParameters object fmcw
         tableRx = [
             0   0   0   0   1
@@ -110,12 +110,12 @@ classdef sarAntennaArray < handle
             obj.rx.xyz_m = reshape(obj.rx.xyz_m,obj.vx.numVx,1,3);
             obj.vx.xyz_m = reshape([obj.vx.xy_m,obj.z0_m*ones(obj.vx.numVx,1)],obj.vx.numVx,1,3);
             
-            temp = mean(obj.vx.xyz_m,1);
-            temp(3) = 0;
-            
-            obj.tx.xyz_m = obj.tx.xyz_m - temp;
-            obj.rx.xyz_m = obj.rx.xyz_m - temp;
-            obj.vx.xyz_m = obj.vx.xyz_m - temp;
+%             temp = mean(obj.vx.xyz_m,1);
+%             temp(3) = 0;
+%             
+%             obj.tx.xyz_m = obj.tx.xyz_m - temp;
+%             obj.rx.xyz_m = obj.rx.xyz_m - temp;
+%             obj.vx.xyz_m = obj.vx.xyz_m - temp;
         end
         
         function initializeFigures(obj)
